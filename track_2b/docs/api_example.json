@@ -1,0 +1,51 @@
+{
+  "id": "93fdcfe3-668d-4347-8db0-70ead3386f09",
+  "filename": "CH_VD_TAX_001_fr.pdf",
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Office d'impôt du district de Morges",
+      "source_span": "Office d'impôt du district de Morges",
+      "verified": true
+    },
+    "deadline": {
+      "value": "31 octobre 2026",
+      "source_span": "au plus tard le 31 octobre 2026",
+      "verified": true,
+      "iso_date": "2026-10-31"
+    },
+    "actions": [
+      {
+        "value": "Send the completed and signed 2025 tax declaration with supporting documents",
+        "source_span": "nous transmettre votre déclaration dûment complétée et signée, accompagnée des pièces justificatives",
+        "verified": true
+      },
+      {
+        "value": "Request an extension before the deadline if needed",
+        "source_span": "vous pouvez en faire la demande en ligne ou par écrit avant cette date",
+        "verified": true
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Official assessment based on the data the office has, and a possible fine",
+        "source_span": "votre taxation sera établie d'office sur la base des éléments à notre disposition",
+        "verified": true
+      },
+      {
+        "value": "Fine of CHF 500",
+        "source_span": "une amende de CHF 500",
+        "verified": false
+      }
+    ]
+  },
+  "explanation": {
+    "language": "tr",
+    "text": "Vergi dairesi 2025 vergi beyannamenizi henüz almadığını bildiriyor. Beyannameyi belgeleriyle birlikte 31 Ekim 2026'ya kadar göndermeniz gerekiyor. Gönderilmezse vergi daire tarafından resen belirlenir ve ceza verilebilir."
+  },
+  "days_left": 28,
+  "unverified_count": 1,
+  "model_used": "apertus-v1.5-8b",
+  "escalated": false,
+  "latency_ms": 2140
+}
