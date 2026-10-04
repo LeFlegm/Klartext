@@ -1,0 +1,52 @@
+
+{
+  "id": "e4a1b2c3-1111-4567-8901-abcdef123456",
+  "filename": "CH_TAX_004_fr.pdf",
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Administration Fiscale de la Commune de Belleville",
+      "source_span": "Administration Fiscale de la Commune de Belleville",
+      "verified": true
+    },
+    "deadline": {
+      "value": "15 novembre 2026",
+      "source_span": "au plus tard le 15 novembre 2026",
+      "verified": true,
+      "iso_date": "2026-11-15"
+    },
+    "actions": [
+      {
+        "value": "Régler le solde de 850,25 CHF",
+        "source_span": "régler le solde de vos impôts communaux pour l'année fiscale écoulée. Le montant dû s'élève à 850,25 CHF.",
+        "verified": true
+      },
+      {
+        "value": "Transmettre une attestation de domicile",
+        "source_span": "nous transmettre une copie de votre nouvelle attestation de domicile.",
+        "verified": true
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Facturation d'intérêts moratoires",
+        "source_span": "des intérêts moratoires seront facturés.",
+        "verified": true
+      },
+      {
+        "value": "Amende de 100 CHF pour retard de document",
+        "source_span": "une amende de 100 CHF en cas de retard",
+        "verified": false
+      }
+    ]
+  },
+  "explanation": {
+    "language": "tr",
+    "text": "Vergi dairesi, 850.25 CHF tutarındaki vergi borcunuzu ödemenizi ve yeni ikametgah belgenizin bir kopyasını göndermenizi istiyor. Son tarih 15 Kasım 2026. Aksi takdirde gecikme faizi işleyecektir."
+  },
+  "days_left": 42,
+  "unverified_count": 1,
+  "model_used": "apertus-v1.5-8b",
+  "escalated": false,
+  "latency_ms": 2345
+}
