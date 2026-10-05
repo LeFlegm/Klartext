@@ -1,0 +1,31 @@
+
+{
+  "id": "f5b2c3d4-2222-4567-8901-abcdef123456",
+  "filename": "CH_KVG_002_fr.pdf",
+  "extraction": {
+    "document_type": "health_insurance",
+    "sender": {
+      "value": "Assurance Maladie SantePlus",
+      "source_span": "Assurance Maladie SantePlus",
+      "verified": true
+    },
+    "deadline": null,
+    "actions": [
+      {
+        "value": "Renvoyer le questionnaire de santé signé",
+        "source_span": "nous faire parvenir le questionnaire de santé dûment complété et signé.",
+        "verified": true
+      }
+    ],
+    "consequences": []
+  },
+  "explanation": {
+    "language": "tr",
+    "text": "SantePlus sağlık sigortası, poliçe değişikliğinizi tamamlamak için sağlık anketini doldurup imzalayarak göndermenizi istiyor. Belirtilen bir son tarih veya ceza bulunmuyor."
+  },
+  "days_left": null,
+  "unverified_count": 0,
+  "model_used": "apertus-v1.5-8b",
+  "escalated": false,
+  "latency_ms": 1890
+}
