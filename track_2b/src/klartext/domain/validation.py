@@ -1,6 +1,7 @@
 import re
 import unicodedata
 
+from klartext.domain.dates import find_dates
 from klartext.domain.models import Extraction, SourcedText
 
 # Very short spans (e.g. "2026") would match almost any letter and prove nothing.
@@ -37,4 +38,9 @@ def verify(extraction: Extraction, source: str) -> int:
 
     for point in points:
         point.verified = _is_supported(point.source_span, normalized_source)
+
+        # A deadline is only verified if its date really follows from its own quote.
+        deadline = extraction.deadline
+        if deadline is not None and deadline.iso_date is not None:
+            deadline.verified = deadline.verified and deadline.iso_date in find_dates(deadline.source_span)
     return sum(not point.verified for point in points)
