@@ -13,6 +13,9 @@ Rules:
 - "source_span": copy the exact words from the letter, character for character, in the letter's
   original language. Do not drop, add or reorder any word.
 - "value": a short summary IN ENGLISH, even when the letter is in French, German or Italian.
+- sender: the authority or organisation that wrote the letter (usually in the letterhead or signature),
+  never the person or household the letter is addressed to.
+- The reader is the recipient of the letter; actions and deadlines are what the recipient must do.
 - document_type is one of: "tax", "health_insurance", "debt_enforcement", "other".
 - deadline: the date by which the reader must act, with iso_date as YYYY-MM-DD; null if there is none.
 - consequences: only what the letter itself says happens if the reader does nothing; empty list if nothing is stated.
