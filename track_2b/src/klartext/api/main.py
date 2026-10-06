@@ -11,10 +11,12 @@ from klartext.adapters.llm import get_client
 from klartext.adapters.pdf import EmptyDocumentError, extract_text
 from klartext.domain.models import LetterResult
 from klartext.services.pipeline import analyze_letter
+from klartext.services.explainer import LANGUAGES, explain
 
 app = FastAPI(title="Klartext")
 
 DEFAULT_MODEL = os.environ.get("LLM_NAME") or "apertus-v1.5-8b"
+LARGE_MODEL = os.environ.get("LLM_NAME_LARGE") or "apertus-v1.5-70b"
 
 
 @dataclass
@@ -92,3 +94,14 @@ def list_letters():
         results.values(),
         key=lambda r: (r.days_left is None, r.days_left or 0, -r.unverified_count),
     )
+
+@app.post("/documents/{doc_id}/explain", response_model=LetterResult)
+def explain_document(doc_id: str, language: str = "en", model: str = LARGE_MODEL):
+    """Explain an analysed letter in the client's language, using verified facts only."""
+    result = results.get(doc_id)
+    if result is None:
+        raise HTTPException(status_code=409, detail="Analyse the letter first via /extract.")
+    if language not in LANGUAGES:
+        raise HTTPException(status_code=422, detail=f"Unsupported language. Use one of: {', '.join(LANGUAGES)}")
+    result.explanation = explain(client(), model, result, language)
+    return result
