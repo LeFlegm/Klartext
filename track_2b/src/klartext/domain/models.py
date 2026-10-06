@@ -16,6 +16,8 @@ class SourcedText(BaseModel):
 
 class Deadline(SourcedText):
     iso_date: date | None = None
+    # Set when the letter gives a period instead of a date, e.g. "dans un délai de 20 jours".
+    relative_days: int | None = None
 
 
 class Extraction(BaseModel):
@@ -41,6 +43,7 @@ class LetterResult(BaseModel):
     extraction: Extraction
     explanation: Explanation | None = None
     days_left: int | None = None
+    days_left_estimated: bool = False  # True when counted from today for a relative deadline
     unverified_count: int = 0
     model_used: str
     escalated: bool = False

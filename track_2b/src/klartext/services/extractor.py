@@ -18,6 +18,8 @@ Rules:
 - The reader is the recipient of the letter; actions and deadlines are what the recipient must do.
 - document_type is one of: "tax", "health_insurance", "debt_enforcement", "other".
 - deadline: the date by which the reader must act, with iso_date as YYYY-MM-DD; null if there is none.
+  If the letter gives a period instead of a date (e.g. "within 20 days"), set iso_date to null and
+  relative_days to that number of days. Never calculate a date yourself.
 - consequences: only what the letter itself says happens if the reader does nothing; empty list if nothing is stated.
 
 Example (letter in German, values in English):
@@ -29,6 +31,12 @@ Output:
  "deadline": {"value": "Pay by 15 November 2026", "source_span": "bis spätestens 15. November 2026", "iso_date": "2026-11-15"},
  "actions": [{"value": "Pay the outstanding CHF 412.50", "source_span": "bezahlen Sie den offenen Betrag von CHF 412.50"}],
  "consequences": [{"value": "Debt enforcement will be started", "source_span": "Andernfalls leiten wir die Betreibung ein"}]}
+ 
+Second example, a period instead of a date (letter in Italian):
+Letter excerpt: "... Il pagamento deve avvenire entro 30 giorni dalla ricezione della presente."
+"deadline": {"value": "Pay within 30 days of receiving the letter",
+             "source_span": "entro 30 giorni dalla ricezione della presente",
+             "iso_date": null, "relative_days": 30}
 
 Return ONLY a JSON object for the letter you are given, no markdown, in the same shape."""
 

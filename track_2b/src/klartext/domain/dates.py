@@ -47,3 +47,12 @@ def find_dates(text: str) -> set[date]:
 
     found.discard(None)
     return found
+
+# "dans un délai de 20 jours", "innert 30 Tagen", "entro 30 giorni", "within 14 days"
+_RELATIVE_DAYS = re.compile(r"\b(\d{1,3})\s*(?:jours?|tagen?|giorni|days?)\b")
+
+
+def find_relative_days(text: str) -> int | None:
+    """Return the number of days in a period like 'within 20 days', if there is one."""
+    match = _RELATIVE_DAYS.search(text.casefold())
+    return int(match.group(1)) if match else None
