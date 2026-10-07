@@ -1,0 +1,28 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "Office d'impôt du district de Morges",
+    "source_span": "Office d'impôt du district de Morges"
+  },
+  "deadline": {
+    "value": "31 octobre 2026",
+    "source_span": "au plus tard le 31 octobre 2026",
+    "iso_date": "2026-10-31"
+  },
+  "actions": [
+    {
+      "value": "Send the completed and signed 2025 tax return with supporting documents",
+      "source_span": "nous transmettre votre déclaration dûment complétée et signée, accompagnée des pièces justificatives"
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Official assessment based on the data the office has",
+      "source_span": "votre taxation sera établie d'office sur la base des éléments à notre disposition"
+    },
+    {
+      "value": "A fine for procedural violations may be imposed",
+      "source_span": "une amende pour violation des obligations de procédure pourra être prononcée"
+    }
+  ]
+}

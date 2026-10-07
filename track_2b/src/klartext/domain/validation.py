@@ -1,7 +1,7 @@
 import re
 import unicodedata
 
-from klartext.domain.dates import find_dates
+from klartext.domain.dates import find_dates, find_relative_days
 from klartext.domain.models import Extraction, SourcedText
 
 # Very short spans (e.g. "2026") would match almost any letter and prove nothing.
@@ -24,6 +24,13 @@ def normalize(text: str) -> str:
 def _is_supported(span: str, normalized_source: str) -> bool:
     span_n = normalize(span).strip(" .,;:")
     return len(span_n) > MIN_SPAN_LENGTH and span_n in normalized_source
+
+def fill_relative_days(extraction: Extraction) -> None:
+    """If the model quoted a period but left relative_days empty, read the number from the quote."""
+    deadline = extraction.deadline
+    if deadline is not None and deadline.iso_date is None and deadline.relative_days is None:
+        deadline.relative_days = find_relative_days(deadline.source_span)
+
 
 def verify(extraction: Extraction, source: str) -> int:
     """Mark each point whose source span appears in the letter.

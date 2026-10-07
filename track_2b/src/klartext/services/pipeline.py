@@ -6,7 +6,7 @@ from klartext.domain.models import LetterResult
 from klartext.domain.validation import verify
 from klartext.services.extractor import extract
 from klartext.domain.models import Deadline, LetterResult
-from klartext.domain.dates import find_relative_days
+from klartext.domain.validation import fill_relative_days,verify
 
 def analyze_letter(
     client: OpenAI,
@@ -18,10 +18,7 @@ def analyze_letter(
 ) -> LetterResult:
     """Extract, verify and score one letter (single model; the cascade comes later)."""
     extraction, latency_ms = extract(client, model, text)
-    # Safety net: if the model quoted a period but left relative_days empty, read it from the quote.
-    deadline = extraction.deadline
-    if deadline is not None and deadline.iso_date is None and deadline.relative_days is None:
-        deadline.relative_days = find_relative_days(deadline.source_span)
+    fill_relative_days(extraction)
     unverified = verify(extraction, text)
 
     days_left, estimated = compute_days_left(extraction.deadline, today or date.today())
