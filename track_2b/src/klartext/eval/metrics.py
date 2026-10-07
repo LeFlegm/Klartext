@@ -53,6 +53,10 @@ def _is_correct(kind: str, point: SourcedText, truth: Extraction) -> bool:
     return any(same_passage(point.source_span, t.source_span) for t in pool)
 
 
+def judged_points(pred: Extraction, truth: Extraction) -> list[tuple[str, SourcedText, bool]]:
+    """Each predicted point with its kind and whether it matches the ground truth."""
+    return [(kind, point, _is_correct(kind, point, truth)) for kind, point in points_of(pred)]
+
 @dataclass
 class LetterScore:
     document_type_ok: bool

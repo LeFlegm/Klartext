@@ -1,0 +1,39 @@
+{
+  "letter": "CH_VD_TAX_001_fr",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1888,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Office d'impôt du district de Morges",
+      "source_span": "Office d'impôt du district de Morges",
+      "verified": false
+    },
+    "deadline": {
+      "value": "By 31 October 2026",
+      "source_span": "au plus tard le 31 octobre 2026",
+      "verified": false,
+      "iso_date": "2026-10-31",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Submit completed and signed 2025 tax return with supporting documents",
+        "source_span": "transmettre votre déclaration dûment complétée et signée, accompagnée des pièces justificatives",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Tax assessment will be made based on available information",
+        "source_span": "votre taxation sera établie d'office sur la base des éléments à notre disposition",
+        "verified": false
+      },
+      {
+        "value": "A fine for procedural violation may be imposed",
+        "source_span": "une amende pour violation des obligations de procédure pourra être prononcée",
+        "verified": false
+      }
+    ]
+  }
+}

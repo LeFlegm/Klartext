@@ -1,0 +1,12 @@
+{
+  "started": "2026-10-07T18:07:42",
+  "models": {
+    "8b": "apertus-v1.5-8b",
+    "70b": "apertus-v1.5-70b"
+  },
+  "temperature": 0,
+  "prompt_sha1": "92f0d2688a81",
+  "letters": [
+    "CH_VD_TAX_001_fr"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "letter": "CH_VD_TAX_001_fr",
+  "model": "apertus-v1.5-70b",
+  "latency_ms": 6973,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Administration Cantonale des Impôts, Office d'impôt du district de Morges",
+      "source_span": "ADMINISTRATION CANTONALE DES IMPÔTS\nOffice d'impôt du district de Morges",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Submit the completed and signed tax return with supporting documents by 31 October 2026",
+      "source_span": "au plus tard le 31 octobre 2026",
+      "verified": false,
+      "iso_date": "2026-10-31",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Submit the completed and signed tax return for the 2025 fiscal period with supporting documents",
+        "source_span": "nous vous prions de bien vouloir nous transmettre votre déclaration dûment complétée et signée, accompagnée des pièces justificatives",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Tax assessment will be made automatically based on available information and a procedural penalty may be imposed",
+        "source_span": "votre taxation sera établie d'office sur la base des éléments à notre disposition, et une amende pour violation des obligations de procédure pourra être prononcée",
+        "verified": false
+      }
+    ]
+  }
+}
