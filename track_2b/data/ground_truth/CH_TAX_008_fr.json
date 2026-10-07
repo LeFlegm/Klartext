@@ -1,0 +1,25 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "Administration fiscale cantonale Fribourg",
+    "source_span": "Administration fiscale cantonale\nFribourg"
+  },
+  "deadline": {
+    "value": "30 jours",
+    "source_span": "dans un délai de 30 jours.",
+    "iso_date": null,
+    "relative_days": 30
+  },
+  "actions": [
+    {
+      "value": "Acquitter le montant de 1'450.00 CHF",
+      "source_span": "Veuillez acquitter ce montant dans un délai de 30 jours."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Intérêts moratoires de 5%",
+      "source_span": "des intérêts moratoires de 5% vous seront facturés."
+    }
+  ]
+}

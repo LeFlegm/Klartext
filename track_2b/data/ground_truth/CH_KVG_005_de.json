@@ -1,0 +1,32 @@
+{
+  "document_type": "health_insurance",
+  "sender": {
+    "value": "Assura Krankenversicherung AG",
+    "source_span": "Assura Krankenversicherung AG"
+  },
+  "deadline": {
+    "value": "31.10.2026",
+    "source_span": "bis zum 31.10.2026",
+    "iso_date": "2026-10-31"
+  },
+  "actions": [
+    {
+      "value": "Die ausstehende Prämie von 395.50 CHF begleichen",
+      "source_span": "Die ausstehende Prämie ist bis zum 31.10.2026 zu begleichen."
+    },
+    {
+      "value": "Unterschriebenes Formular zur Gesundheitsdeklaration einreichen",
+      "source_span": "Das unterschriebene Formular muss innert 10 Tagen ab Erhalt dieses Schreibens bei uns eintreffen."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Mahngebühr von 50.00 CHF",
+      "source_span": "müssen wir Ihnen eine Mahngebühr von CHF 50.00 in Rechnung stellen."
+    },
+    {
+      "value": "Leistungsaufschübe",
+      "source_span": "können Leistungsaufschübe die Folge sein."
+    }
+  ]
+}
