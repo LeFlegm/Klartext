@@ -1,0 +1,24 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "Steueramt Thurgau",
+    "source_span": "Steueramt Thurgau"
+  },
+  "deadline": {
+    "value": "15.12.2026",
+    "source_span": "bis spätestens am 15.12.2026.",
+    "iso_date": "2026-12-15"
+  },
+  "actions": [
+    {
+      "value": "Totalbetrag von CHF 800.00 überweisen",
+      "source_span": "Bitte überweisen Sie den Totalbetrag von CHF 800.00 bis spätestens am 15.12.2026."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Mahngebühr wird erhoben",
+      "source_span": "Bei verspäteter Zahlung wird eine Mahngebühr erhoben."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "document_type": "health_insurance",
+  "sender": {
+    "value": "Assurance Maladie SantePlus",
+    "source_span": "Assurance Maladie SantePlus"
+  },
+  "deadline": null,
+  "actions": [
+    {
+      "value": "Renvoyer le questionnaire de santé complété et signé",
+      "source_span": "nous faire parvenir le questionnaire de santé dûment complété et signé."
+    }
+  ],
+  "consequences": []
+}

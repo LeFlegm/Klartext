@@ -1,0 +1,28 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "Repubblica e Cantone Ticino - Divisione delle contribuzioni",
+    "source_span": "Repubblica e Cantone Ticino\nDivisione delle contribuzioni"
+  },
+  "deadline": {
+    "value": "30 novembre 2026",
+    "source_span": "entro il 30 novembre 2026.",
+    "iso_date": "2026-11-30"
+  },
+  "actions": [
+    {
+      "value": "Versare l'importo di CHF 2'150.00",
+      "source_span": "versare l'importo di CHF 2'150.00"
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Avvio della procedura esecutiva",
+      "source_span": "la pratica verrà trasmessa all'Ufficio di esecuzione e fallimenti per l'avvio della procedura esecutiva"
+    },
+    {
+      "value": "Aggravio di spese",
+      "source_span": "conseguente aggravio di spese a suo carico."
+    }
+  ]
+}

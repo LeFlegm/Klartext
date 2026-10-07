@@ -1,0 +1,24 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "Service des Contributions de la Ville de Montreux",
+    "source_span": "Service des Contributions de la Ville de Montreux"
+  },
+  "deadline": {
+    "value": "31 mars 2026",
+    "source_span": "d'ici au 31 mars 2026 au plus tard.",
+    "iso_date": "2026-03-31"
+  },
+  "actions": [
+    {
+      "value": "Acquitter l'acompte de 1'200.00 CHF",
+      "source_span": "acquitter le premier acompte de vos impôts cantonaux et communaux pour l'année courante. Le montant à payer s'élève à 1'200.00 CHF."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Émolument de sommation de 50.00 CHF",
+      "source_span": "un émolument de sommation de 50.00 CHF vous sera facturé."
+    }
+  ]
+}

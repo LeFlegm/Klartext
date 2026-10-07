@@ -1,0 +1,25 @@
+{
+  "document_type": "debt_enforcement",
+  "sender": {
+    "value": "Ufficio d'esecuzione di Lugano",
+    "source_span": "Ufficio d'esecuzione di Lugano"
+  },
+  "deadline": {
+    "value": "20 giorni",
+    "source_span": "entro 20 giorni dalla ricezione di questo documento.",
+    "iso_date": null,
+    "relative_days": 20
+  },
+  "actions": [
+    {
+      "value": "Pagare la somma di CHF 2'300.00",
+      "source_span": "È tenuto a pagare la somma di CHF 2'300.00"
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Pignoramento dei beni",
+      "source_span": "si procederà con il pignora-\nmento dei suoi beni."
+    }
+  ]
+}
