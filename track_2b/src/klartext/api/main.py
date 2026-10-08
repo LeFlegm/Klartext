@@ -2,18 +2,31 @@ import os
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
+from pathlib import Path
 
+import openai
 from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
 from pydantic import ValidationError
 
-from klartext.adapters.llm import get_client
+from klartext.adapters.llm import LLMConfigError, get_client
 from klartext.adapters.pdf import EmptyDocumentError, extract_text
 from klartext.domain.models import LetterResult
-from klartext.services.pipeline import analyze_letter
 from klartext.services.explainer import LANGUAGES, explain
+from klartext.services.pipeline import analyze_letter, analyze_with_cascade
 
 app = FastAPI(title="Klartext")
+
+@app.exception_handler(LLMConfigError)
+async def llm_not_configured(request, exc: LLMConfigError):
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
+
+
+@app.exception_handler(openai.OpenAIError)
+async def llm_unavailable(request, exc: openai.OpenAIError):
+    return JSONResponse(status_code=502, content={"detail": f"The language model endpoint failed: {exc}"})
 
 DEFAULT_MODEL = os.environ.get("LLM_NAME") or "apertus-v1.5-8b"
 LARGE_MODEL = os.environ.get("LLM_NAME_LARGE") or "apertus-v1.5-70b"
@@ -73,19 +86,22 @@ async def upload_batch(files: list[UploadFile]):
             failed.append({"filename": file.filename, "error": e.detail})
     return {"uploaded": uploaded, "failed": failed}
 
-
 @app.post("/documents/{doc_id}/extract", response_model=LetterResult)
-def extract_document(doc_id: str, model: str = DEFAULT_MODEL):
+def extract_document(doc_id: str, model: str | None = None):
     doc = documents.get(doc_id)
     if doc is None:
         raise HTTPException(status_code=404, detail="Document not found.")
     try:
-        result = analyze_letter(client(), model, doc_id, doc.filename, doc.text)
+        if model:
+            result = analyze_letter(client(), model, doc_id, doc.filename, doc.text)
+        else:
+            result = analyze_with_cascade(
+                client(), DEFAULT_MODEL, LARGE_MODEL, doc_id, doc.filename, doc.text
+            )
     except (ValueError, ValidationError) as e:
         raise HTTPException(status_code=502, detail=f"Model returned invalid output: {e}")
     results[doc_id] = result
     return result
-
 
 @app.get("/letters", response_model=list[LetterResult])
 def list_letters():
@@ -94,6 +110,7 @@ def list_letters():
         results.values(),
         key=lambda r: (r.days_left is None, r.days_left or 0, -r.unverified_count),
     )
+
 
 @app.post("/documents/{doc_id}/explain", response_model=LetterResult)
 def explain_document(doc_id: str, language: str = "en", model: str = LARGE_MODEL):
@@ -105,3 +122,8 @@ def explain_document(doc_id: str, language: str = "en", model: str = LARGE_MODEL
         raise HTTPException(status_code=422, detail=f"Unsupported language. Use one of: {', '.join(LANGUAGES)}")
     result.explanation = explain(client(), model, result, language)
     return result
+
+# The built UI is copied to /app/static by the Dockerfile; serve it last so API routes win.
+STATIC_DIR = Path(__file__).resolve().parents[2] / "static"
+if STATIC_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="ui")
