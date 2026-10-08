@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 
 from fastapi import FastAPI, HTTPException, UploadFile
-from openai import OpenAI
 from pydantic import ValidationError
 
 from klartext.adapters.llm import get_client
@@ -16,7 +15,20 @@ from klartext.services.explainer import LANGUAGES, explain
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 
+import openai
+from fastapi.responses import JSONResponse
+from klartext.adapters.llm import LLMConfigError, get_client
+
 app = FastAPI(title="Klartext")
+
+@app.exception_handler(LLMConfigError)
+async def llm_not_configured(request, exc: LLMConfigError):
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
+
+
+@app.exception_handler(openai.OpenAIError)
+async def llm_unavailable(request, exc: openai.OpenAIError):
+    return JSONResponse(status_code=502, content={"detail": f"The language model endpoint failed: {exc}"})
 
 DEFAULT_MODEL = os.environ.get("LLM_NAME") or "apertus-v1.5-8b"
 LARGE_MODEL = os.environ.get("LLM_NAME_LARGE") or "apertus-v1.5-70b"
