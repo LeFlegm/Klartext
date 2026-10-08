@@ -42,14 +42,19 @@ export default function KlartextApp() {
       const formData = new FormData();
       Array.from(files).forEach(file => formData.append("files", file)); 
 
-      const uploadRes = await fetch("http://localhost:8000/documents/batch", {
+            const uploadRes = await fetch("http://localhost:8000/documents/batch", {
         method: "POST",
         body: formData,
       });
-      const uploadedDocs = await uploadRes.json();
+      const { uploaded, failed } = await uploadRes.json();
+
+      // Tell the user about files that could not be read (e.g. scans without text)
+      if (failed.length > 0) {
+        alert("Could not read: " + failed.map((f: any) => f.filename).join(", "));
+      }
 
       // 2. Run extraction (8B/70B) for each letter in parallel
-      await Promise.all(uploadedDocs.map((doc: any) =>
+      await Promise.all(uploaded.map((doc: any) =>
         fetch(`http://localhost:8000/documents/${doc.id}/extract`, { method: "POST" })
       ));
 
