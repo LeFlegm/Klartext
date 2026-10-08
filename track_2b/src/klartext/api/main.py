@@ -13,6 +13,9 @@ from klartext.domain.models import LetterResult
 from klartext.services.pipeline import analyze_letter
 from klartext.services.explainer import LANGUAGES, explain
 
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+
 app = FastAPI(title="Klartext")
 
 DEFAULT_MODEL = os.environ.get("LLM_NAME") or "apertus-v1.5-8b"
@@ -105,3 +108,8 @@ def explain_document(doc_id: str, language: str = "en", model: str = LARGE_MODEL
         raise HTTPException(status_code=422, detail=f"Unsupported language. Use one of: {', '.join(LANGUAGES)}")
     result.explanation = explain(client(), model, result, language)
     return result
+
+# The built UI is copied to /app/static by the Dockerfile; serve it last so API routes win.
+STATIC_DIR = Path(__file__).resolve().parents[2] / "static"
+if STATIC_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="ui")
