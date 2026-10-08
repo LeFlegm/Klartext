@@ -1,24 +1,29 @@
 {
   "document_type": "tax",
   "sender": {
-    "value": "Service des Contributions de la Ville de Montreux",
-    "source_span": "Service des Contributions de la Ville de Montreux"
+    "value": "Administration Fiscale de la Commune de Belleville",
+    "source_span": "Administration Fiscale de la Commune de Belleville"
   },
   "deadline": {
-    "value": "31 mars 2026",
-    "source_span": "d'ici au 31 mars 2026 au plus tard.",
-    "iso_date": "2026-03-31"
+    "value": "15 November 2026",
+    "source_span": "au plus tard le 15 novembre 2026",
+    "iso_date": "2026-11-15",
+    "relative_days": null
   },
   "actions": [
     {
-      "value": "Acquitter l'acompte de 1'200.00 CHF",
-      "source_span": "acquitter le premier acompte de vos impôts cantonaux et communaux pour l'année courante. Le montant à payer s'élève à 1'200.00 CHF."
+      "value": "Pay the remaining municipal tax balance of 850.25 CHF",
+      "source_span": "régler le solde de vos impôts communaux pour l'année fiscale écoulée. Le montant dû s'élève à 850,25 CHF."
+    },
+    {
+      "value": "Send a copy of the new certificate of residence",
+      "source_span": "nous transmettre une copie de votre nouvelle attestation de domicile"
     }
   ],
   "consequences": [
     {
-      "value": "Émolument de sommation de 50.00 CHF",
-      "source_span": "un émolument de sommation de 50.00 CHF vous sera facturé."
+      "value": "Late-payment interest will be charged",
+      "source_span": "des intérêts moratoires seront facturés"
     }
   ]
 }

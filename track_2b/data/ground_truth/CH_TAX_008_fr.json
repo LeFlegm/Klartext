@@ -2,7 +2,7 @@
   "document_type": "tax",
   "sender": {
     "value": "Administration fiscale cantonale Fribourg",
-    "source_span": "Administration fiscale cantonale\nFribourg"
+    "source_span": "Administration fiscale"
   },
   "deadline": {
     "value": "30 jours",
