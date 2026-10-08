@@ -2,22 +2,20 @@ import os
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-
-from fastapi import FastAPI, HTTPException, UploadFile
-from pydantic import ValidationError
-
-from klartext.adapters.llm import get_client
-from klartext.adapters.pdf import EmptyDocumentError, extract_text
-from klartext.domain.models import LetterResult
-from klartext.services.pipeline import analyze_letter, analyze_with_cascade
-from klartext.services.explainer import LANGUAGES, explain
-
 from pathlib import Path
-from fastapi.staticfiles import StaticFiles
 
 import openai
+from fastapi import FastAPI, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from openai import OpenAI
+from pydantic import ValidationError
+
 from klartext.adapters.llm import LLMConfigError, get_client
+from klartext.adapters.pdf import EmptyDocumentError, extract_text
+from klartext.domain.models import LetterResult
+from klartext.services.explainer import LANGUAGES, explain
+from klartext.services.pipeline import analyze_letter, analyze_with_cascade
 
 app = FastAPI(title="Klartext")
 
