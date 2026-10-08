@@ -1,0 +1,39 @@
+{
+  "letter": "CH_TAX_004_fr",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1240,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Administration Fiscale de la Commune de Belleville",
+      "source_span": "Administration Fiscale de la Commune de Belleville",
+      "verified": false
+    },
+    "deadline": {
+      "value": "By 15 November 2026",
+      "source_span": "au plus tard le 15 novembre 2026",
+      "verified": false,
+      "iso_date": "2026-11-15",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Pay the outstanding municipal tax balance of 850.25 CHF",
+        "source_span": "régler le solde de vos impôts communaux pour l'année fiscale écoulée",
+        "verified": false
+      },
+      {
+        "value": "Submit a copy of your new residence certificate",
+        "source_span": "nous transmettre une copie de votre nouvelle attestation de domicile",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Late fees will be charged",
+        "source_span": "des intérêts moratoires seront facturés",
+        "verified": false
+      }
+    ]
+  }
+}

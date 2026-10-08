@@ -16,21 +16,31 @@ def _key(line: str) -> str:
     return re.sub(r"\d+", "#", line.strip())
 
 
+def _edge_indexes(lines: list[str]) -> set[int]:
+    """Indexes of the first and last non-empty line of a page."""
+    filled = [i for i, line in enumerate(lines) if line.strip()]
+    return {filled[0], filled[-1]} if filled else set()
+
+
 def strip_repeated_lines(pages: list[str]) -> list[str]:
-    """Remove lines that repeat on two or more pages (footers, headers)."""
+    """Remove page headers/footers: edge lines that repeat on 2+ pages."""
     if len(pages) < 2:
         return pages
 
-    counts = Counter()
-    for page in pages:
-        keys = {_key(line) for line in page.splitlines() if line.strip()}
-        counts.update(keys)
+    split = [page.splitlines() for page in pages]
 
+    counts = Counter()
+    for lines in split:
+        counts.update({_key(lines[i]) for i in _edge_indexes(lines)})
     repeated = {k for k, n in counts.items() if n >= 2}
 
     cleaned = []
-    for page in pages:
-        kept = [line for line in page.splitlines() if _key(line) not in repeated]
+    for lines in split:
+        edges = _edge_indexes(lines)
+        kept = [
+            line for i, line in enumerate(lines)
+            if not (i in edges and _key(line) in repeated)
+        ]
         cleaned.append("\n".join(kept))
     return cleaned
 

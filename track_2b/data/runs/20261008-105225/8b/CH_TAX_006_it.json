@@ -1,0 +1,34 @@
+{
+  "letter": "CH_TAX_006_it",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1143,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Divisione delle contribuzioni, Repubblica e Cantone Ticino",
+      "source_span": "Divisione delle contribuzioni Repubblica e Cantone Ticino",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Payment by 30 November 2026",
+      "source_span": "entro il 30 novembre 2026",
+      "verified": false,
+      "iso_date": "2026-11-30",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Pay CHF 2,150.00",
+        "source_span": "versare l'importo di CHF 2'150.00",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Debt enforcement proceedings will be initiated",
+        "source_span": "la pratica verrà trasmessa all'Ufficio di esecuzione e fallimenti per l'avvio della procedura esecutiva",
+        "verified": false
+      }
+    ]
+  }
+}

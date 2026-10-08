@@ -1,0 +1,22 @@
+{
+  "letter": "CH_KVG_002_fr",
+  "model": "apertus-v1.5-70b",
+  "latency_ms": 3302,
+  "extraction": {
+    "document_type": "health_insurance",
+    "sender": {
+      "value": "SantePlus health insurance",
+      "source_span": "Assurance Maladie SantePlus",
+      "verified": false
+    },
+    "deadline": null,
+    "actions": [
+      {
+        "value": "Send the completed and signed health questionnaire",
+        "source_span": "faire parvenir le questionnaire de santé dûment complété et signé",
+        "verified": false
+      }
+    ],
+    "consequences": []
+  }
+}

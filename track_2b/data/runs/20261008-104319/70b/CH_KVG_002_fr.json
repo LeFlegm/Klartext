@@ -1,0 +1,5 @@
+{
+  "letter": "CH_KVG_002_fr",
+  "model": "apertus-v1.5-70b",
+  "error": "2 validation errors for Extraction\ndeadline.value\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\ndeadline.source_span\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+}

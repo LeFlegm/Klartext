@@ -1,0 +1,21 @@
+{
+  "started": "2026-10-08T10:49:05",
+  "models": {
+    "8b": "apertus-v1.5-8b",
+    "70b": "apertus-v1.5-70b"
+  },
+  "temperature": 0,
+  "prompt_sha1": "92f0d2688a81",
+  "letters": [
+    "CH_BETREIBUNG_003_fr",
+    "CH_BETREIBUNG_009_it",
+    "CH_KVG_002_fr",
+    "CH_KVG_005_de",
+    "CH_KVG_007_de",
+    "CH_TAX_004_fr",
+    "CH_TAX_006_it",
+    "CH_TAX_008_fr",
+    "CH_TAX_010_de",
+    "CH_VD_TAX_001_fr"
+  ]
+}

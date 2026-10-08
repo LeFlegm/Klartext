@@ -20,3 +20,13 @@ def test_single_page_is_left_untouched():
 def test_line_repeated_on_one_page_only_is_kept():
     pages = ["Total\nTotal\nBetrag 10", "Anderer Text"]
     assert "Total" in strip_repeated_lines(pages)[0]
+
+def test_letterhead_repeated_in_signature_is_kept():
+    pages = [
+        "Steueramt Thurgau\nHerr Meier\nSteueramt Thurgau Seite 1/2",
+        "Zahlung bis 15.12.2026\nSteueramt Thurgau\nSteueramt Thurgau Seite 2/2",
+    ]
+    result = strip_repeated_lines(pages)
+    assert "Steueramt Thurgau" in result[0]
+    assert "Steueramt Thurgau" in result[1]
+    assert "Seite" not in "\n".join(result)

@@ -1,0 +1,44 @@
+{
+  "letter": "CH_KVG_005_de",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1684,
+  "extraction": {
+    "document_type": "health_insurance",
+    "sender": {
+      "value": "Assura Krankenversicherung AG",
+      "source_span": "Assura Krankenversicherung AG",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Outstanding premium must be paid by 31 October 2026",
+      "source_span": "bis zum 31.10.2026",
+      "verified": false,
+      "iso_date": "2026-10-31",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Pay the outstanding premium of CHF 395.50",
+        "source_span": "Die ausstehende Prämie ist bis zum 31.10.2026 zu begleichen",
+        "verified": false
+      },
+      {
+        "value": "Submit the signed health declaration form within 10 days of receiving this letter",
+        "source_span": "Das unterschriebene Formular muss innert 10 Tagen ab Erhalt dieses Schreibens bei uns eintreffen",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "A reminder fee of CHF 50.00 will be charged if the premium is not paid on time",
+        "source_span": "Mahngebühr von CHF 50.00 in Rechnung stellen",
+        "verified": false
+      },
+      {
+        "value": "Service suspensions may occur if the health declaration form is not submitted",
+        "source_span": "Leistungsaufschübe die Folge sein können",
+        "verified": false
+      }
+    ]
+  }
+}

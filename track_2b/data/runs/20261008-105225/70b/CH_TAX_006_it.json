@@ -1,0 +1,34 @@
+{
+  "letter": "CH_TAX_006_it",
+  "model": "apertus-v1.5-70b",
+  "latency_ms": 6671,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Divisione delle contribuzioni (Cantone Ticino)",
+      "source_span": "Repubblica e Cantone Ticino\nDivisione delle contribuzioni",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay by 30 November 2026",
+      "source_span": "entro il 30 novembre 2026",
+      "verified": false,
+      "iso_date": "2026-11-30",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Pay CHF 2'150.00 using the attached QR payment slip",
+        "source_span": "versare l'importo di CHF 2'150.00 ... utilizzare la polizza di versamento QR allegata",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "The case will be forwarded to the Office of Execution and Bankruptcy to initiate enforcement proceedings, incurring additional costs for you",
+        "source_span": "la pratica verrà trasmessa all'Ufficio di esecuzione e fallimenti per l'avvio della procedura esecutiva, con conseguente aggravio di spese a suo carico",
+        "verified": false
+      }
+    ]
+  }
+}

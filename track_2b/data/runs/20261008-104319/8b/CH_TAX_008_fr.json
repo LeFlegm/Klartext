@@ -1,0 +1,34 @@
+{
+  "letter": "CH_TAX_008_fr",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 932,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Administration fiscale",
+      "source_span": "Administration fiscale",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay within 30 days",
+      "source_span": "dans un délai de 30 jours",
+      "verified": false,
+      "iso_date": null,
+      "relative_days": 30
+    },
+    "actions": [
+      {
+        "value": "Pay CHF 1,450.00",
+        "source_span": "acquitter ce montant de 1'450.00",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "5% late fees will be charged",
+        "source_span": "des intérêts moratoires de 5% vous seront facturés",
+        "verified": false
+      }
+    ]
+  }
+}
