@@ -1,7 +1,5 @@
-from klartext.domain.models import Extraction
-from klartext.domain.validation import verify
-
-from klartext.domain.validation import normalize
+from klartext.domain.models import Deadline, Extraction, SourcedText
+from klartext.domain.validation import normalize, verify
 
 LETTER = (
     "ADMINISTRATION CANTONALE DES IMPÔTS\n"
@@ -42,3 +40,15 @@ def test_too_short_span_is_not_verified():
 def test_hyphenated_line_break_is_joined():
     source = "Sollten Sie diese Zahlungs-\nfrist verpassen"
     assert normalize("diese Zahlungsfrist verpassen") in normalize(source)
+
+def test_deadline_with_both_date_and_period_is_not_verified():
+    text = "1. Die Prämie ist bis zum 31.10.2026 zu begleichen. 2. Das Formular muss innert 10 Tagen eintreffen."
+    ex = Extraction(
+        document_type="other",
+        sender=SourcedText(value="x", source_span="nicht im Text"),
+        deadline=Deadline(value="x", source_span=text, iso_date="2026-10-31", relative_days=10),
+        actions=[],
+        consequences=[],
+    )
+    verify(ex, text)
+    assert ex.deadline.verified is False

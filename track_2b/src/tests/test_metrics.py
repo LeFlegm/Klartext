@@ -1,5 +1,5 @@
 from klartext.domain.models import Extraction
-from klartext.eval.metrics import Run, evaluate_config, same_passage, score_letter
+from klartext.eval.metrics import Run, evaluate_config, same_passage, score_letter, same_sender, SourcedText
 
 LETTER = (
     "ADMINISTRATION CANTONALE DES IMPÔTS\n"
@@ -75,3 +75,14 @@ def test_failed_run_is_counted_not_scored():
     runs = {"a": Run(None, 900)}
     r = evaluate_config("C", ["a"], runs, runs, {"a": LETTER}, {"a": TRUTH})
     assert r["failed"] == 1 and r["summary"]["sender correct"] == (0, 0)
+
+def test_sender_matches_on_quote_not_on_english_value():
+    pred = SourcedText(value="SantePlus health insurance", source_span="Assurance Maladie SantePlus")
+    truth = SourcedText(value="Assurance Maladie SantePlus", source_span="Assurance Maladie SantePlus")
+    assert same_sender(pred, truth)
+
+
+def test_longer_letterhead_quote_still_counts_as_same_sender():
+    pred = SourcedText(value="x", source_span="Assurance Maladie SantePlus Département des primes")
+    truth = SourcedText(value="y", source_span="Assurance Maladie SantePlus")
+    assert same_sender(pred, truth)

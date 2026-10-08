@@ -47,12 +47,14 @@ def verify(extraction: Extraction, source: str) -> int:
     for point in points:
         point.verified = _is_supported(point.source_span, normalized_source)
 
-        # A deadline is only verified if its date really follows from its own quote.
-        deadline = extraction.deadline
-        if deadline is not None and deadline.iso_date is not None:
+    deadline = extraction.deadline
+    if deadline is not None:
+        if deadline.iso_date is not None:
             deadline.verified = deadline.verified and deadline.iso_date in find_dates(deadline.source_span)
-        # Same idea for relative deadlines: the number of days must appear in the quote.
-        if deadline is not None and deadline.relative_days is not None:
+        if deadline.relative_days is not None:
             number_in_span = re.search(rf"\b{deadline.relative_days}\b", deadline.source_span)
             deadline.verified = deadline.verified and number_in_span is not None
+        # A deadline is either a date or a period; claiming both means the model merged two deadlines.
+        if deadline.iso_date is not None and deadline.relative_days is not None:
+            deadline.verified = False
     return sum(not point.verified for point in points)

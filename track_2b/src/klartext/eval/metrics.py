@@ -23,6 +23,11 @@ def token_f1(a: str, b: str) -> float:
 def same_passage(a: str, b: str) -> bool:
     return token_f1(a, b) >= MATCH_THRESHOLD
 
+def same_sender(a: SourcedText, b: SourcedText) -> bool:
+    """Senders match on their quotes (the values are English paraphrases)."""
+    na, nb = normalize(a.source_span), normalize(b.source_span)
+    return na in nb or nb in na or same_passage(na, nb)
+
 
 def _deadline_key(e: Extraction) -> tuple | None:
     """What a deadline says, ignoring wording; None when the letter gives no usable deadline."""
@@ -44,7 +49,7 @@ def points_of(e: Extraction) -> list[tuple[str, SourcedText]]:
 
 def _is_correct(kind: str, point: SourcedText, truth: Extraction) -> bool:
     if kind == "sender":
-        return same_passage(point.value, truth.sender.value)
+        return same_sender(point, truth.sender)
     if kind == "deadline":
         assert isinstance(point, Deadline)
         return (point.iso_date, point.relative_days) == _deadline_key(truth)
@@ -73,7 +78,7 @@ def score_letter(pred: Extraction, truth: Extraction) -> LetterScore:
     """Compare one extraction (verified flags already set) with its ground truth."""
     score = LetterScore(
         document_type_ok=pred.document_type == truth.document_type,
-        sender_ok=same_passage(pred.sender.value, truth.sender.value),
+        sender_ok=same_sender(pred.sender, truth.sender),
         deadline_ok=_deadline_key(pred) == _deadline_key(truth),
     )
     for kind, point in points_of(pred):
