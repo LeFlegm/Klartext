@@ -17,6 +17,7 @@ _EQUIVALENT_CHARS = str.maketrans({
 
 def normalize(text: str) -> str:
     """Make matching robust to line breaks, spacing, quote styles and case."""
+    text = re.sub(r"(?<=\w)-\n(?=\w)", "", text)
     text = unicodedata.normalize("NFC", text).translate(_EQUIVALENT_CHARS)
     text = re.sub(r"\s+", " ", text)
     return text.strip().casefold()

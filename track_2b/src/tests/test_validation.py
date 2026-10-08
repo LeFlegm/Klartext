@@ -1,6 +1,8 @@
 from klartext.domain.models import Extraction
 from klartext.domain.validation import verify
 
+from klartext.domain.validation import normalize
+
 LETTER = (
     "ADMINISTRATION CANTONALE DES IMPÔTS\n"
     "Office d'impôt du district de Morges\n"
@@ -36,3 +38,7 @@ def test_invented_span_is_not_verified():
 def test_too_short_span_is_not_verified():
     e = make("2026")
     assert verify(e, LETTER) == 1
+
+def test_hyphenated_line_break_is_joined():
+    source = "Sollten Sie diese Zahlungs-\nfrist verpassen"
+    assert normalize("diese Zahlungsfrist verpassen") in normalize(source)
