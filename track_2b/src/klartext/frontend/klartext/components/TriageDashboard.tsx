@@ -6,6 +6,9 @@ export default function TriageDashboard({ docsList, isUploading, onFileUpload, o
 
   // Automatic sorting by days left
   const sortedData = useMemo(() => {
+    // Sécurité au cas où docsList serait undefined au démarrage
+    if (!docsList) return [];
+    
     return [...docsList].sort((a, b) => {
       if (a.days_left === null) return 1;
       if (b.days_left === null) return -1;
@@ -39,48 +42,63 @@ export default function TriageDashboard({ docsList, isUploading, onFileUpload, o
         )}
       </section>
 
-      {/* TRIAGE TABLE */}
-      <div className="bg-white rounded-xl shadow border border-slate-200 overflow-hidden">
-        <div className="p-4 bg-slate-100 border-b border-slate-200">
-          <h2 className="font-bold text-lg">Letters to process (Sorted by urgency)</h2>
-        </div>
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-200">
-              <th className="p-4">File</th>
-              <th className="p-4">Sender</th>
-              <th className="p-4">Days left</th>
-              <th className="p-4">Verification (Model)</th>
-              <th className="p-4 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {sortedData.map((doc, idx) => (
-              <tr key={idx} className="hover:bg-slate-50">
-                <td className="p-4 font-medium text-slate-900">{doc.filename}</td>
-                <td className="p-4 text-sm text-slate-600">{doc.extraction?.sender?.value || 'Unknown'}</td>
-                <td className="p-4">
-                  {doc.days_left !== null ? (
-                     <span className={`text-xs font-bold px-2 py-1 rounded-md ${doc.days_left <= 20 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
-                       {doc.days_left_estimated ? '~' : ''}{doc.days_left} days
-                     </span>
-                  ) : (
-                    <span className="text-xs text-slate-400">No deadline</span>
-                  )}
-                </td>
-                <td className="p-4 text-xs font-semibold text-indigo-700">
-                  {doc.model_used} {doc.escalated && <span className="text-orange-600 font-bold ml-1">(Escalated)</span>}
-                </td>
-                <td className="p-4 text-right">
-                  <button onClick={() => onOpenDetail(doc)} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
-                    Open
-                  </button>
-                </td>
+      {/* TRIAGE TABLE - Ne s'affiche que s'il y a des documents */}
+      {sortedData.length > 0 && (
+        <div className="bg-white rounded-xl shadow border border-slate-200 overflow-hidden">
+          <div className="p-4 bg-slate-100 border-b border-slate-200">
+            <h2 className="font-bold text-lg">Letters to process (Sorted by urgency)</h2>
+          </div>
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50 text-slate-500 text-xs uppercase border-b border-slate-200">
+                <th className="p-4">File</th>
+                <th className="p-4">Sender</th>
+                <th className="p-4">Days left</th>
+                <th className="p-4">Verification</th>
+                <th className="p-4">Model Used</th>
+                <th className="p-4 text-right">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {sortedData.map((doc, idx) => (
+                <tr key={idx} className="hover:bg-slate-50">
+                  <td className="p-4 font-medium text-slate-900">{doc.filename}</td>
+                  <td className="p-4 text-sm text-slate-600">{doc.extraction?.sender?.value || 'Unknown'}</td>
+                  <td className="p-4">
+                    {doc.days_left !== null ? (
+                       <span className={`text-xs font-bold px-2 py-1 rounded-md ${doc.days_left <= 20 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+                         {doc.days_left_estimated ? '~' : ''}{doc.days_left} days
+                       </span>
+                    ) : (
+                      <span className="text-xs text-slate-400">No deadline</span>
+                    )}
+                  </td>
+                  <td className="p-4">
+                    {/* Badge Unverified Count (Le "Twist") */}
+                    {doc.unverified_count > 0 ? (
+                      <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded-full animate-pulse">
+                        ⚠️ {doc.unverified_count} unsupported
+                      </span>
+                    ) : (
+                      <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-full">
+                        ✓ All verified
+                      </span>
+                    )}
+                  </td>
+                  <td className="p-4 text-xs font-semibold text-indigo-700">
+                    {doc.model_used} {doc.escalated && <span className="text-orange-600 font-bold ml-1">(Escalated)</span>}
+                  </td>
+                  <td className="p-4 text-right">
+                    <button onClick={() => onOpenDetail(doc)} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                      Open
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </main>
   );
 }

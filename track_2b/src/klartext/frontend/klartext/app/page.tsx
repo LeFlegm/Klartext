@@ -3,33 +3,12 @@ import React, { useState } from 'react';
 import TriageDashboard from '../components/TriageDashboard';
 import LetterDetailView from '../components/LetterDetailView';
 
-// Mock data to prove the Twist
-const initialDocs = [
-  {
-    id: "e4a1b2c3",
-    filename: "CH_VD_TAX_001_fr.pdf",
-    extraction: {
-      document_type: "tax",
-      sender: { value: "Tax Administration of Belleville", verified: true },
-      deadline: { value: "November 15, 2026", verified: true },
-      actions: [{ value: "Pay the balance of 850.25 CHF", verified: true }],
-      consequences: [
-        { value: "Billing of default interest", verified: true },
-        { value: "100 CHF fine for late submission", verified: false } // The Twist
-      ]
-    },
-    days_left: 42,
-    days_left_estimated: false,
-    model_used: "apertus-v1.5-8b",
-    escalated: false,
-    latency_ms: 2345
-  }
-];
-
 export default function KlartextApp() {
   const [currentView, setCurrentView] = useState<'triage' | 'detail'>('triage');
   const [activeDoc, setActiveDoc] = useState<any>(null);
-  const [docsList, setDocsList] = useState(initialDocs);
+  
+  // L'application démarre désormais à 100% vide, sans aucune fausse donnée
+  const [docsList, setDocsList] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,22 +21,29 @@ export default function KlartextApp() {
       const formData = new FormData();
       Array.from(files).forEach(file => formData.append("files", file)); 
 
-      const uploadRes = await fetch("http://localhost:8000/documents/batch", {
+      // Utilisation de l'URL relative et récupération de { uploaded, failed }
+      const uploadRes = await fetch("/documents/batch", {
         method: "POST",
         body: formData,
       });
-      const uploadedDocs = await uploadRes.json();
+      const { uploaded, failed } = await uploadRes.json();
 
-      // 2. Run extraction (8B/70B) for each letter in parallel
-      await Promise.all(uploadedDocs.map((doc: any) =>
-        fetch(`http://localhost:8000/documents/${doc.id}/extract`, { method: "POST" })
-      ));
+      if (failed && failed.length > 0) {
+        console.warn("Certains fichiers ont échoué à l'upload :", failed);
+      }
 
-      // 3. Fetch all finalized and sorted letters
-      const lettersRes = await fetch("http://localhost:8000/letters");
-      const allLetters = await lettersRes.json();
-      
-      setDocsList(allLetters);
+      if (uploaded && uploaded.length > 0) {
+        // 2. Run extraction (8B/70B) for each successfully uploaded letter
+        await Promise.all(uploaded.map((doc: any) =>
+          fetch(`/documents/${doc.id}/extract`, { method: "POST" })
+        ));
+
+        // 3. Fetch all finalized and sorted letters (URL relative)
+        const lettersRes = await fetch("/letters");
+        const allLetters = await lettersRes.json();
+        
+        setDocsList(allLetters);
+      }
       
     } catch (error) {
       console.error("API Error:", error);
