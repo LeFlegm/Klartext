@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TriageDashboard from '../components/TriageDashboard';
 import LetterDetailView from '../components/LetterDetailView';
 
@@ -7,9 +7,26 @@ export default function KlartextApp() {
   const [currentView, setCurrentView] = useState<'triage' | 'detail'>('triage');
   const [activeDoc, setActiveDoc] = useState<any>(null);
   
-  // L'application démarre désormais à 100% vide, sans aucune fausse donnée
   const [docsList, setDocsList] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+
+  // NOUVEAU : Récupérer l'historique des documents déjà traités au chargement de la page
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await fetch("/letters");
+        if (res.ok) {
+          const history = await res.json();
+          // Si l'API renvoie des documents, on les met dans la liste
+          setDocsList(history);
+        }
+      } catch (error) {
+        console.warn("Impossible de récupérer l'historique (le backend n'a peut-être pas encore démarré).", error);
+      }
+    };
+
+    fetchHistory();
+  }, []); // Le tableau vide [] signifie que ça s'exécute uniquement à l'ouverture de la page
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -17,11 +34,9 @@ export default function KlartextApp() {
 
     setIsUploading(true);
     try {
-      // 1. Upload all files at once (Batch)
       const formData = new FormData();
       Array.from(files).forEach(file => formData.append("files", file)); 
 
-      // Utilisation de l'URL relative et récupération de { uploaded, failed }
       const uploadRes = await fetch("/documents/batch", {
         method: "POST",
         body: formData,
@@ -33,12 +48,12 @@ export default function KlartextApp() {
       }
 
       if (uploaded && uploaded.length > 0) {
-        // 2. Run extraction (8B/70B) for each successfully uploaded letter
+        // Extraction
         await Promise.all(uploaded.map((doc: any) =>
           fetch(`/documents/${doc.id}/extract`, { method: "POST" })
         ));
 
-        // 3. Fetch all finalized and sorted letters (URL relative)
+        // Récupération de la liste mise à jour
         const lettersRes = await fetch("/letters");
         const allLetters = await lettersRes.json();
         

@@ -41,6 +41,22 @@ The `data/` directory must not exceed 100 MB.
 ❗️ Submissions are not handled on Devpost but via this URL only:
 http://hackapertus.ch/online-hack/submissions
 
+### Run locally
+
+From `track_2b/`, create a `.env` file from `.env.example`, then run:
+
+```bash
+make run
+```
+
+This starts both services in Docker:
+
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- Backend health check: http://localhost:8000/health
+
+Stop the services with `make stop`.
+
 The submission must: 
 1. follow the template repo and include all prerequisite files and definitions
 2. follow the specified input/output formats
