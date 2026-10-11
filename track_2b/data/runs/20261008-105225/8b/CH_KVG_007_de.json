@@ -1,0 +1,34 @@
+{
+  "letter": "CH_KVG_007_de",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1079,
+  "extraction": {
+    "document_type": "health_insurance",
+    "sender": {
+      "value": "GA Gesundheitskasse Alpen",
+      "source_span": "GA Gesundheitskasse Alpen",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay by 30 November 2026",
+      "source_span": "bis zum 30.11.2026",
+      "verified": false,
+      "iso_date": "2026-11-30",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Transfer CHF 350.00",
+        "source_span": "überweisen Sie den Betrag von CHF 350.00",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Debt enforcement will be initiated",
+        "source_span": "sind wir gezwungen, rechtliche Schritte einzuleiten. In diesem Fall wird unverzüglich die Betreibung eingeleitet",
+        "verified": false
+      }
+    ]
+  }
+}

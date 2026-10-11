@@ -1,12 +1,14 @@
 from datetime import date
 
 from openai import OpenAI
+from pydantic import ValidationError
 
 from klartext.domain.models import LetterResult
 from klartext.domain.validation import verify
 from klartext.services.extractor import extract
 from klartext.domain.models import Deadline, LetterResult
 from klartext.domain.validation import fill_relative_days,verify
+
 
 def analyze_letter(
     client: OpenAI,
@@ -35,6 +37,28 @@ def analyze_letter(
         model_used=model,
         latency_ms=latency_ms,
     )
+
+def analyze_with_cascade(client, small, large, doc_id, filename, text, today=None, analyze=analyze_letter):
+    """Try the small model first; escalate to the large one if anything is unverified or the output is invalid."""
+    small_result = None
+    try:
+        small_result = analyze(client, small, doc_id, filename, text, today)
+        if small_result.unverified_count == 0:
+            return small_result
+    except (ValueError, ValidationError):
+        pass  # fall through to the large model
+
+    try:
+        large_result = analyze(client, large, doc_id, filename, text, today)
+    except (ValueError, ValidationError):
+        if small_result is not None:
+            return small_result  # keep the flagged small-model answer rather than failing
+        raise
+
+    large_result.escalated = True
+    if small_result is not None:
+        large_result.latency_ms += small_result.latency_ms
+    return large_result
 
 def compute_days_left(deadline: Deadline | None, today: date) -> tuple[int | None, bool]:
     """Days until the deadline, and whether that number is an estimate.

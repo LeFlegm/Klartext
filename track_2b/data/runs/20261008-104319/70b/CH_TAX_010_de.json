@@ -1,0 +1,34 @@
+{
+  "letter": "CH_TAX_010_de",
+  "model": "apertus-v1.5-70b",
+  "latency_ms": 5173,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Tax authority",
+      "source_span": "Steuerabrechnung 2025",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay by 15 December 2026",
+      "source_span": "bis spätestens am 15.12.2026",
+      "verified": false,
+      "iso_date": "2026-12-15",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Transfer the total amount of CHF 800.00",
+        "source_span": "überweisen Sie den Totalbetrag von CHF 800.00",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "A reminder fee will be charged for late payment",
+        "source_span": "Bei verspäteter Zahlung wird eine Mahngebühr erhoben",
+        "verified": false
+      }
+    ]
+  }
+}

@@ -1,16 +1,17 @@
+# Stage 1: build the UI to static files (build time only, needs the npm registry)
+FROM node:22-slim AS web
+WORKDIR /web
+COPY klartext/frontend/klartext/package*.json ./
+RUN npm ci
+COPY klartext/frontend/klartext/ ./
+RUN npm run build
+
+# Stage 2: the runtime image (Python only, no Node)
 FROM python:3.12-slim
-
-# Working directory inside the container (Linux path)
 WORKDIR /app
-
-# Copy only the dependency list first, so these layers stay cached when code changes
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Then copy the whole package (including __init__.py files)
 COPY klartext ./klartext
-
+COPY --from=web /web/out ./static
 EXPOSE 8000
-
-# Exec form: uvicorn runs as the main process and receives stop signals directly
 CMD ["uvicorn", "klartext.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

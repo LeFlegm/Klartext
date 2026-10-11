@@ -1,0 +1,25 @@
+{
+  "document_type": "health_insurance",
+  "sender": {
+    "value": "Gesundheitskasse Alpen",
+    "source_span": "Gesundheitskasse Alpen"
+  },
+  "deadline": {
+    "value": "30 November 2026",
+    "source_span": "bis zum 30.11.2026",
+    "iso_date": "2026-11-30",
+    "relative_days": null
+  },
+  "actions": [
+    {
+      "value": "Pay the outstanding premium of CHF 350.00",
+      "source_span": "Bitte überweisen Sie den Betrag von CHF 350.00 bis zum 30.11.2026."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Debt enforcement (Betreibung) will be started immediately, with considerable additional costs",
+      "source_span": "In diesem Fall wird unverzüglich die Betreibung eingeleitet, was mit erheblichen Zusatzkosten für Sie verbunden ist."
+    }
+  ]
+}

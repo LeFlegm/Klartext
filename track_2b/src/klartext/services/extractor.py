@@ -1,5 +1,7 @@
 import re
 import time
+import json
+
 
 from openai import OpenAI
 from pydantic import ValidationError
@@ -46,7 +48,15 @@ def _parse(raw: str) -> Extraction:
     match = re.search(r"\{.*\}", raw, re.DOTALL)
     if match is None:
         raise ValueError("No JSON object found in model output")
-    return Extraction.model_validate_json(match.group(0))
+
+    data = json.loads(match.group(0))
+
+    # Some models write an empty deadline object instead of null; treat it as "no deadline".
+    deadline = data.get("deadline")
+    if isinstance(deadline, dict) and not deadline.get("value") and not deadline.get("source_span"):
+        data["deadline"] = None
+
+    return Extraction.model_validate(data)
 
 
 def extract(client: OpenAI, model: str, letter: str) -> tuple[Extraction, int]:

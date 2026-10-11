@@ -1,0 +1,34 @@
+{
+  "letter": "CH_BETREIBUNG_009_it",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1076,
+  "extraction": {
+    "document_type": "debt_enforcement",
+    "sender": {
+      "value": "Ufficio d'esecuzione di Lugano",
+      "source_span": "Ufficio d'esecuzione di Lugano",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay within 20 days of receiving this document",
+      "source_span": "entro 20 giorni dalla ricezione di questo documento",
+      "verified": false,
+      "iso_date": null,
+      "relative_days": 20
+    },
+    "actions": [
+      {
+        "value": "Pay CHF 2'300.00",
+        "source_span": "pagare la somma di CHF 2'300.00",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Sequestration of assets will be initiated",
+        "source_span": "si procederà con il pignoramento dei suoi beni",
+        "verified": false
+      }
+    ]
+  }
+}

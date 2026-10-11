@@ -1,0 +1,34 @@
+{
+  "letter": "CH_BETREIBUNG_003_fr",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1556,
+  "extraction": {
+    "document_type": "debt_enforcement",
+    "sender": {
+      "value": "Office des Poursuites du Canton de Neuchâtel",
+      "source_span": "Office des Poursuites du Canton de Neuchâtel",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Payment must be made within 20 days",
+      "source_span": "dans un délai de 20 jours",
+      "verified": false,
+      "iso_date": null,
+      "relative_days": 20
+    },
+    "actions": [
+      {
+        "value": "Pay the amount of 3,450.00 CHF",
+        "source_span": "verser la somme de 3'450.00 CHF correspondant à votre dette en souffrance",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Seizure of assets or salary will be ordered",
+        "source_span": "une saisie de vos biens ou de votre salaire sera ordonnée",
+        "verified": false
+      }
+    ]
+  }
+}
