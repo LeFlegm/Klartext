@@ -1,105 +1,136 @@
-"use client";
 import React, { useState } from 'react';
 
 export default function LetterDetailView({ activeDoc, onBack }: any) {
-  // État pour stocker la phrase (source_span) actuellement survolée
-  const [hoveredSpan, setHoveredSpan] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState('Français');
+  const [activeTab, setActiveTab] = useState<'pdf' | 'text'>('pdf'); // Pour la vue mobile
+  
+  // Fonction utilitaire pour simuler la traduction (le backend d'Apertus devrait normalement renvoyer la traduction)
+  const translate = (text: string, lang: string) => {
+      if (!text) return "";
+      // Le LLM fait déjà un super travail de normalisation, on affiche directement son texte !
+      return text;
+  }
 
-  // Fonction factice simulant le texte complet extrait du PDF par le backend
-  const fullText = activeDoc.full_text || `...texte complet du document non disponible pour ${activeDoc.filename}... \n\n${activeDoc.extraction?.actions?.[0]?.source_span || ''} \n\n${activeDoc.extraction?.consequences?.[0]?.source_span || ''}`;
+  // Fonction pour afficher le texte extrait avec la source en surbrillance
+  const HighlightedQuote = ({ label, source_quote, translated_value, verified }: { label: string, source_quote: string, translated_value: string, verified?: boolean }) => {
+    // Si on n'a ni citation ni traduction, on n'affiche rien
+    if (!source_quote && !translated_value) return null;
 
-  // Fonction pour surligner la phrase dans le texte complet
-  const renderTextWithHighlight = (text: string, highlight: string | null) => {
-    if (!highlight || !text.includes(highlight)) return <span className="whitespace-pre-wrap">{text}</span>;
-    const parts = text.split(highlight);
     return (
-      <span className="whitespace-pre-wrap leading-relaxed">
-        {parts[0]}
-        <mark className="bg-yellow-300 text-slate-900 px-1 rounded transition-colors duration-300 shadow-sm">{highlight}</mark>
-        {parts[1]}
-      </span>
+        <div className="mb-4">
+          <span className="text-xs font-bold text-slate-500 uppercase">{label}</span>
+          
+          {/* Affiche la valeur finale (traduite si nécessaire) */}
+          <div className="mt-1 mb-2 text-slate-900 font-medium">
+             {translated_value}
+          </div>
+
+          {/* Affiche le Span de source */}
+          <div className="p-3 bg-slate-50 rounded border border-slate-200 text-sm font-serif text-slate-800 relative">
+            <span className="bg-yellow-200 px-1 rounded">{source_quote || "Source text not found in document"}</span>
+            {verified !== undefined && (
+              <span className={`absolute -top-2 -right-2 text-[10px] font-bold px-2 py-0.5 rounded-full ${verified ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                {verified ? '✓ Verified' : '⚠️ Unverified'}
+              </span>
+            )}
+          </div>
+        </div>
     );
   };
 
+  // Si on n'a pas de document actif, on affiche une erreur propre
+  if (!activeDoc) {
+      return (
+        <div className="p-8 text-center">
+            <p className="text-red-500">Aucun document sélectionné.</p>
+            <button onClick={onBack} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded">Retour</button>
+        </div>
+      );
+  }
+
+  // Extraction sécurisée des données du backend
+  const extraction = activeDoc?.extraction || {};
+  const sender = extraction?.sender || {};
+  const actions = extraction?.actions || [];
+  const consequences = extraction?.consequences || [];
+
   return (
-    <main className="flex h-[calc(100vh-72px)] overflow-hidden">
-      {/* PANNEAU GAUCHE : Affichage du texte extrait (au lieu du faux PDF) */}
-      <section className="w-1/2 bg-slate-50 p-6 border-r border-slate-300 flex flex-col overflow-y-auto">
-        <button onClick={onBack} className="mb-6 text-slate-600 font-bold text-sm hover:text-slate-900 self-start bg-white px-3 py-1 rounded shadow-sm border border-slate-200">
-          ← Back to triage
-        </button>
-        <div className="bg-white flex-1 rounded shadow-sm p-8 text-slate-700 font-serif border border-slate-200">
-          <h3 className="text-sm font-sans font-bold text-slate-400 mb-4 border-b pb-2">Extracted Text (Highlight View)</h3>
-          {renderTextWithHighlight(fullText, hoveredSpan)}
-        </div>
-      </section>
+    <main className="max-w-7xl mx-auto p-4 md:p-6 mt-2 md:mt-6">
+      <button onClick={onBack} className="mb-4 md:mb-6 px-4 py-2 bg-white border border-slate-300 rounded-md text-sm font-medium hover:bg-slate-50">
+        ← Back to triage
+      </button>
 
-      {/* PANNEAU DROIT : EXTRACTION & EXPLANATION */}
-      <section className="w-1/2 bg-white p-6 overflow-y-auto space-y-6">
-        <div className="flex justify-between items-center border-b pb-4">
-          <h2 className="text-xl font-bold text-slate-800">Letter details</h2>
-          <select className="text-sm bg-slate-100 border border-slate-300 rounded px-2 py-1 outline-none">
-            <option>English (Caseworker)</option>
-            <option>Tigrinya (Client)</option>
-            <option>Dari (Client)</option>
-            <option>Somali (Client)</option>
-          </select>
-        </div>
+      {/* Mobile Tabs */}
+      <div className="flex lg:hidden mb-4 border-b border-slate-200">
+        <button onClick={() => setActiveTab('pdf')} className={`pb-2 px-4 font-medium ${activeTab === 'pdf' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500'}`}>Original PDF</button>
+        <button onClick={() => setActiveTab('text')} className={`pb-2 px-4 font-medium ${activeTab === 'text' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-slate-500'}`}>Extracted Data</button>
+      </div>
 
-        <div className="border border-slate-200 rounded p-4 shadow-sm">
-          <div className="text-xs text-slate-500 uppercase font-bold mb-1">Sender</div>
-          <div className="text-lg font-medium">{activeDoc.extraction?.sender?.value}</div>
-        </div>
+      <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
+        
+        {/* LECTEUR PDF (Masqué sur mobile si l'onglet Texte est actif) */}
+        <section className={`flex-1 bg-white border border-slate-200 rounded-xl shadow-sm p-4 flex-col min-h-[600px] lg:min-h-[800px] ${activeTab === 'pdf' ? 'flex' : 'hidden lg:flex'}`}>
+          <h2 className="text-sm font-bold text-slate-500 uppercase mb-4 border-b border-slate-100 pb-2">Document Original</h2>
+          
+          {/* L'iframe. On utilise le path_or_url s'il existe, sinon on tente la route du backend. */}
+          {/* Si Yusuf renvoie l'URL du fichier dans activeDoc.url ou activeDoc.path, on l'utilise */}
+          <iframe 
+             src={activeDoc.url || activeDoc.file_url || activeDoc.path || `/documents/${activeDoc.id}/file`} 
+             className="w-full h-full rounded border border-slate-200 bg-slate-100" 
+             title="Document PDF" 
+             onError={(e) => console.error("Erreur de chargement du PDF", e)}
+          />
+        </section>
 
-        <div className="border border-slate-200 rounded p-4 shadow-sm">
-          <div className="text-xs text-slate-500 uppercase font-bold mb-3">Required actions</div>
-          <ul className="space-y-3">
-            {activeDoc.extraction?.actions?.map((act: any, i: number) => (
-              <li 
-                key={i} 
-                className="text-slate-800 p-2 hover:bg-slate-50 rounded cursor-pointer transition-colors border-l-2 border-transparent hover:border-indigo-400"
-                onMouseEnter={() => setHoveredSpan(act.source_span)}
-                onMouseLeave={() => setHoveredSpan(null)}
-              >
-                • {act.value}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="border border-slate-200 rounded p-4 shadow-sm">
-          <div className="text-xs text-slate-500 uppercase font-bold mb-3">Stated consequences</div>
-          <div className="space-y-3">
-            {activeDoc.extraction?.consequences?.map((cons: any, i: number) => (
-              <div 
-                key={i}
-                onMouseEnter={() => setHoveredSpan(cons.source_span)}
-                onMouseLeave={() => setHoveredSpan(null)}
-                className="cursor-pointer hover:opacity-90 transition-opacity"
-              >
-                {cons.verified ? (
-                  <div className="bg-green-50 border-l-4 border-green-500 p-3 text-sm flex flex-col gap-1">
-                     <span className="text-slate-800 font-medium">{cons.value}</span>
-                     <span className="text-[10px] text-green-700 font-bold">✓ VERIFIED SOURCE</span>
-                  </div>
-                ) : (
-                  <div className="bg-red-50 border border-red-300 p-4 rounded text-sm text-red-900 flex flex-col gap-2 relative shadow-sm">
-                     <div className="flex items-center gap-2">
-                       <span className="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase animate-pulse">
-                         ⚠️ Unsupported claim
-                       </span>
-                     </div>
-                     <span className="line-through opacity-70 italic text-slate-500">{cons.value}</span>
-                     <p className="text-xs text-red-700 mt-1">
-                       The system detected and flagged this information because it does not appear in the original text.
-                     </p>
-                  </div>
-                )}
-              </div>
-            ))}
+        {/* DÉTAILS ET SOURCES SURLIGNÉES */}
+        <section className={`flex-1 flex-col gap-6 ${activeTab === 'text' ? 'flex' : 'hidden lg:flex'}`}>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-2">
+            <h2 className="text-xl font-bold text-slate-900">Extraction Details & Spans</h2>
+            <select 
+               value={selectedLanguage} 
+               onChange={(e) => setSelectedLanguage(e.target.value)} 
+               className="w-full sm:w-auto bg-white border border-slate-300 text-sm rounded-lg p-2"
+            >
+              <option value="Français">Français</option>
+              <option value="Anglais">Anglais</option>
+              <option value="Allemand">Allemand</option>
+              <option value="Italien">Italien</option>
+            </select>
           </div>
-        </div>
-      </section>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-sm overflow-hidden">
+            
+            <HighlightedQuote 
+              label="Sender Name" 
+              source_quote={sender.source_span || sender.value} 
+              translated_value={sender.value || "Inconnu"}
+              verified={sender.verified} 
+            />
+            
+            <h3 className="text-xs font-bold text-slate-500 uppercase mt-6 mb-2 border-t pt-4">Required Actions</h3>
+            {actions.length > 0 ? actions.map((action: any, i: number) => (
+              <HighlightedQuote 
+                key={`action-${i}`} 
+                label={`Action ${i + 1}`} 
+                source_quote={action.source_span || action.value} 
+                translated_value={translate(action.value, selectedLanguage)}
+                verified={action.verified} 
+              />
+            )) : <p className="text-sm text-slate-500 italic">Aucune action requise trouvée.</p>}
+
+            <h3 className="text-xs font-bold text-slate-500 uppercase mt-6 mb-2 border-t pt-4">Stated Consequences</h3>
+            {consequences.length > 0 ? consequences.map((cons: any, i: number) => (
+              <HighlightedQuote 
+                 key={`cons-${i}`} 
+                 label={`Consequence ${i + 1}`} 
+                 source_quote={cons.source_span || cons.value} 
+                 translated_value={translate(cons.value, selectedLanguage)}
+                 verified={cons.verified} 
+              />
+            )) : <p className="text-sm text-slate-500 italic">Aucune conséquence trouvée.</p>}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

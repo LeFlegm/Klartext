@@ -1,36 +1,32 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TriageDashboard from '../components/TriageDashboard';
 import LetterDetailView from '../components/LetterDetailView';
-
-// Mock data to prove the Twist
-const initialDocs = [
-  {
-    id: "e4a1b2c3",
-    filename: "CH_VD_TAX_001_fr.pdf",
-    extraction: {
-      document_type: "tax",
-      sender: { value: "Tax Administration of Belleville", verified: true },
-      deadline: { value: "November 15, 2026", verified: true },
-      actions: [{ value: "Pay the balance of 850.25 CHF", verified: true }],
-      consequences: [
-        { value: "Billing of default interest", verified: true },
-        { value: "100 CHF fine for late submission", verified: false } // The Twist
-      ]
-    },
-    days_left: 42,
-    days_left_estimated: false,
-    model_used: "apertus-v1.5-8b",
-    escalated: false,
-    latency_ms: 2345
-  }
-];
 
 export default function KlartextApp() {
   const [currentView, setCurrentView] = useState<'triage' | 'detail'>('triage');
   const [activeDoc, setActiveDoc] = useState<any>(null);
-  const [docsList, setDocsList] = useState(initialDocs);
+  
+  const [docsList, setDocsList] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+
+  // NOUVEAU : Récupérer l'historique des documents déjà traités au chargement de la page
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await fetch("/letters");
+        if (res.ok) {
+          const history = await res.json();
+          // Si l'API renvoie des documents, on les met dans la liste
+          setDocsList(history);
+        }
+      } catch (error) {
+        console.warn("Impossible de récupérer l'historique (le backend n'a peut-être pas encore démarré).", error);
+      }
+    };
+
+    fetchHistory();
+  }, []); // Le tableau vide [] signifie que ça s'exécute uniquement à l'ouverture de la page
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -38,7 +34,6 @@ export default function KlartextApp() {
 
     setIsUploading(true);
     try {
-      // 1. Upload all files at once (Batch)
       const formData = new FormData();
       Array.from(files).forEach(file => formData.append("files", file)); 
 
@@ -58,11 +53,18 @@ export default function KlartextApp() {
         fetch(`http://localhost:8000/documents/${doc.id}/extract`, { method: "POST" })
       ));
 
-      // 3. Fetch all finalized and sorted letters
-      const lettersRes = await fetch("http://localhost:8000/letters");
-      const allLetters = await lettersRes.json();
-      
-      setDocsList(allLetters);
+      if (uploaded && uploaded.length > 0) {
+        // Extraction
+        await Promise.all(uploaded.map((doc: any) =>
+          fetch(`/documents/${doc.id}/extract`, { method: "POST" })
+        ));
+
+        // Récupération de la liste mise à jour
+        const lettersRes = await fetch("/letters");
+        const allLetters = await lettersRes.json();
+        
+        setDocsList(allLetters);
+      }
       
     } catch (error) {
       console.error("API Error:", error);

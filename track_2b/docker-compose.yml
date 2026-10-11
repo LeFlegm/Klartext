@@ -8,4 +8,11 @@ services:
       LLM_API_KEY: ${LLM_API_KEY}
     ports:
       - "8000:8000"         # host port 8000 -> container port 8000
+
+  frontend:
+    build: ./src/klartext/frontend/klartext
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"         # host port 3000 -> container port 3000
   
