@@ -101,19 +101,19 @@ export default function TriageDashboard({ docsList, isUploading, onFileUpload, o
       )}
       {/* BENCHMARK CHARTS SECTION */}
       <section className="bg-white rounded-xl shadow border border-slate-200 p-6 mt-8">
-        <h2 className="font-bold text-lg mb-6 text-slate-800">Apertus Pipeline Evaluation (Zero-Shot)</h2>
+        <h2 className="font-bold text-lg mb-6 text-slate-800">Apertus Pipeline Evaluation (development set, 10 letters)</h2>
         <div className="flex flex-col md:flex-row gap-8">
           
           {/* Chart 1: Accuracy */}
           <div className="flex-1">
-            <h3 className="text-sm font-semibold text-slate-600 mb-3">Undetected Errors (Dev Set vs Blind Set)</h3>
+            <h3 className="text-sm font-semibold text-slate-600 mb-3">Undetected errors (wrong answers shown as verified)</h3>
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between text-xs mb-1"><span className="font-medium">Dev Set (10 docs)</span><span className="text-emerald-600 font-bold">0 Errors</span></div>
+                <div className="flex justify-between text-xs mb-1"><span className="font-medium">Dev Set (10 docs)</span><span className="text-emerald-600 font-bold">0 undetected (raw models: 1 to 3)</span></div>
                 <div className="w-full bg-slate-100 rounded-full h-2.5"><div className="bg-emerald-500 h-2.5 rounded-full" style={{ width: '100%' }}></div></div>
               </div>
               <div>
-                <div className="flex justify-between text-xs mb-1"><span className="font-medium">Blind Test Set (Wait for freeze)</span><span className="text-slate-400">Pending</span></div>
+                <div className="flex justify-between text-xs mb-1"><span className="font-medium">Blind test set</span><span className="text-slate-400">not run yet</span></div>
                 <div className="w-full bg-slate-100 rounded-full h-2.5"><div className="bg-slate-300 h-2.5 rounded-full w-0"></div></div>
               </div>
             </div>
@@ -124,10 +124,10 @@ export default function TriageDashboard({ docsList, isUploading, onFileUpload, o
             <h3 className="text-sm font-semibold text-slate-600 mb-3">Model Cascade Efficiency (8B → 70B)</h3>
             <div className="flex items-center gap-4">
               <div className="w-32 h-32 rounded-full border-[16px] border-indigo-600 relative flex items-center justify-center">
-                <span className="text-xl font-bold text-indigo-900">85%</span>
-                {/* Simulated SVG circle segment for the 15% escalation */}
+                <span className="text-xl font-bold text-indigo-900">70%</span>
+                {/* SVG circle segment for the 30% escalation (3 of 10 letters) */}
                 <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="42" fill="none" stroke="#f97316" strokeWidth="16" strokeDasharray="264" strokeDashoffset="224" />
+                  <circle cx="50" cy="50" r="42" fill="none" stroke="#f97316" strokeWidth="16" strokeDasharray="264" strokeDashoffset="185" />
                 </svg>
               </div>
               <div className="flex flex-col gap-2 text-sm">
