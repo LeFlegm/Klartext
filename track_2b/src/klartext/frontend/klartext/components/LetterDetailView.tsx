@@ -51,7 +51,9 @@ export default function LetterDetailView({ activeDoc, onBack }: any) {
 
   const extraction = activeDoc.extraction || {};
   const sender = extraction.sender || {};
-  const deadline = extraction.deadline;
+  // Same rule as the scorer and the triage: a deadline counts only if it has a date or a number of days.
+  const rawDeadline = extraction.deadline;
+  const deadline = rawDeadline && (rawDeadline.iso_date || rawDeadline.relative_days != null) ? rawDeadline : null;
   const actions = extraction.actions || [];
   const consequences = extraction.consequences || [];
 
@@ -98,7 +100,7 @@ export default function LetterDetailView({ activeDoc, onBack }: any) {
         <section className={`flex-1 bg-white border border-slate-200 rounded-xl shadow-sm p-4 flex-col min-h-[600px] lg:min-h-[800px] ${activeTab === 'pdf' ? 'flex' : 'hidden lg:flex'}`}>
           <h2 className="text-sm font-bold text-slate-500 uppercase mb-4 border-b border-slate-100 pb-2">Original letter</h2>
           <iframe
-            src={`/documents/${activeDoc.id}/file`}
+            src={`/documents/${activeDoc.id}/file#navpanes=0&view=FitH`}
             className="w-full h-full rounded border border-slate-200 bg-slate-100"
             title="Original letter (PDF)"
           />
