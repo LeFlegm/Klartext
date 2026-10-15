@@ -33,7 +33,7 @@ make run                  # = docker compose up --build
 - API docs: http://localhost:8000/docs
 - Stop: `make stop`
 
-Sample letters are in [`data/`](data/) (all synthetic). Without a valid `LLM_API_KEY` the app starts,
+Sample letters are in [`data/`](data/) (all synthetic): open http://localhost:8000, click **+**, select all PDFs in `track_2b/data/` (Ctrl+A) and upload them. Analysis starts automatically and takes about a minute for ten letters. Without a valid `LLM_API_KEY` the app starts,
 but analysing a letter fails.
 
 | Variable | Meaning | Default |

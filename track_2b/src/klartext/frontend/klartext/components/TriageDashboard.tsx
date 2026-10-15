@@ -99,6 +99,30 @@ export default function TriageDashboard({ docsList, isUploading, onFileUpload, o
           </table>
         </div>
       )}
+      {/* HOW IT WORKS */}
+      <section className="bg-white rounded-xl shadow border border-slate-200 p-6 mt-8">
+        <h2 className="font-bold text-lg text-slate-800">How Klartext works</h2>
+        <p className="text-sm text-slate-600 mt-1 mb-5">
+          Letters stay in memory. They are sent only to the Apertus endpoint you configure; if it runs on your own server, nothing leaves your network.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <div className="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm mb-2">1</div>
+            <h3 className="font-bold text-slate-900 text-sm mb-1">Upload</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">Add a batch of PDF letters. The text is read inside the container and kept in memory only. Nothing is written to disk.</p>
+          </div>
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <div className="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm mb-2">2</div>
+            <h3 className="font-bold text-slate-900 text-sm mb-1">Extract with Apertus</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">The 8B model returns sender, deadline, actions and consequences, each with a word-for-word quote. If a check fails, the 70B model tries again.</p>
+          </div>
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+            <div className="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm mb-2">3</div>
+            <h3 className="font-bold text-slate-900 text-sm mb-1">Check, sort, explain</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">Code, not the model, confirms that every quote is in the letter. Unverified points are flagged. Letters are sorted by days left and can be explained in ten languages.</p>
+          </div>
+        </div>
+      </section>
       {/* BENCHMARK CHARTS SECTION */}
       <section className="bg-white rounded-xl shadow border border-slate-200 p-6 mt-8">
         <h2 className="font-bold text-lg mb-6 text-slate-800">Apertus Pipeline Evaluation (development set, 10 letters)</h2>
