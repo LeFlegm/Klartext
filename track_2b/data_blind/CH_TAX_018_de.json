@@ -1,0 +1,19 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "Kantonales Steueramt St. Gallen",
+    "source_span": "Kantonales Steueramt St. Gallen"
+  },
+  "deadline": {
+    "value": "31.12.2026",
+    "source_span": "zahlbar bis 31.12.2026",
+    "iso_date": "2026-12-31"
+  },
+  "actions": [
+    {
+      "value": "Totalbetrag von CHF 1'850.00 überweisen",
+      "source_span": "Bitte überweisen Sie den Totalbetrag von CHF 1'850.00 zahlbar bis 31.12.2026."
+    }
+  ],
+  "consequences": []
+}

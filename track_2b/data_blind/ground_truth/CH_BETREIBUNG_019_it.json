@@ -1,0 +1,25 @@
+{
+  "document_type": "debt_enforcement",
+  "sender": {
+    "value": "Ufficio delle Esecuzioni Bellinzona",
+    "source_span": "Ufficio delle Esecuzioni Bellinzona"
+  },
+  "deadline": {
+    "value": "10 giorni",
+    "source_span": "entro 10 giorni dalla notifica del presente atto.",
+    "iso_date": null,
+    "relative_days": 10
+  },
+  "actions": [
+    {
+      "value": "Pagare la somma di CHF 1'200.00",
+      "source_span": "lei è intimato a pagare la somma di CHF 1'200.00"
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Pignoramento dei beni",
+      "source_span": "si procederà immediatamente con il pignoramento dei suoi beni."
+    }
+  ]
+}

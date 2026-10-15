@@ -1,0 +1,24 @@
+{
+  "document_type": "tax",
+  "sender": {
+    "value": "City of Zurich — Expat Tax Services",
+    "source_span": "City of Zurich — Expat Tax Services"
+  },
+  "deadline": {
+    "value": "20.12.2026",
+    "source_span": "by 20.12.2026",
+    "iso_date": "2026-12-20"
+  },
+  "actions": [
+    {
+      "value": "Settle the remaining balance of CHF 620.00",
+      "source_span": "Please settle the remaining balance of CHF 620.00 by 20.12.2026."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Automatic late payment fee of CHF 50.00",
+      "source_span": "Failure to pay by the specified due date will result in an automatic late payment fee of CHF 50.00."
+    }
+  ]
+}

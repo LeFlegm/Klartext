@@ -1,0 +1,28 @@
+{
+  "document_type": "health_insurance",
+  "sender": {
+    "value": "Helvetia Krankenversicherung AG",
+    "source_span": "Helvetia Krankenversicherung AG"
+  },
+  "deadline": {
+    "value": "15.11.2026",
+    "source_span": "bis zum 15.11.2026",
+    "iso_date": "2026-11-15"
+  },
+  "actions": [
+    {
+      "value": "Prämienabrechnung von CHF 420.00 begleichen",
+      "source_span": "Wir bitten Sie, die ausstehende Prämienabrechnung für das vierte Quartal in der Höhe von CHF 420.00 bis zum 15.11.2026 zu begleichen."
+    },
+    {
+      "value": "Antrag auf Ratenzahlung bis zum 01.11.2026 einreichen",
+      "source_span": "muss der entsprechende Antrag zwingend bis zum 01.11.2026 bei unserem Kundendienst eingereicht werden."
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Mahngebühren von CHF 30.00",
+      "source_span": "Bei verfristetem Zahlungseingang werden Mahngebühren von CHF 30.00 verrechnet."
+    }
+  ]
+}

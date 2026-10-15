@@ -1,0 +1,14 @@
+{
+  "document_type": "administrative_notice",
+  "sender": {
+    "value": "Canton de Vaud — Service des Automobiles",
+    "source_span": "Canton de Vaud — Service des Automobiles"
+  },
+  "deadline": {
+    "value": null,
+    "source_span": null,
+    "iso_date": null
+  },
+  "actions": [],
+  "consequences": []
+}

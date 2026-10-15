@@ -101,42 +101,51 @@ export default function TriageDashboard({ docsList, isUploading, onFileUpload, o
       )}
       {/* BENCHMARK CHARTS SECTION */}
       <section className="bg-white rounded-xl shadow border border-slate-200 p-6 mt-8">
-        <h2 className="font-bold text-lg mb-6 text-slate-800">Apertus Pipeline Evaluation (development set, 10 letters)</h2>
-        <div className="flex flex-col md:flex-row gap-8">
-          
-          {/* Chart 1: Accuracy */}
-          <div className="flex-1">
-            <h3 className="text-sm font-semibold text-slate-600 mb-3">Undetected errors (wrong answers shown as verified)</h3>
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-xs mb-1"><span className="font-medium">Dev Set (10 docs)</span><span className="text-emerald-600 font-bold">0 undetected (raw models: 1 to 3)</span></div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5"><div className="bg-emerald-500 h-2.5 rounded-full" style={{ width: '100%' }}></div></div>
-              </div>
-              <div>
-                <div className="flex justify-between text-xs mb-1"><span className="font-medium">Blind test set</span><span className="text-slate-400">not run yet</span></div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5"><div className="bg-slate-300 h-2.5 rounded-full w-0"></div></div>
-              </div>
+        {/* SECTION ARCHITECTURE LOCALE & FONCTIONNEMENT GLOBAL */}
+        <div className="bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-sm mt-8">
+          <div className="max-w-3xl mx-auto text-center mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold mb-3 border border-emerald-200">
+              🔒 100% Local & Privacy-First (Air-Gapped)
+            </div>
+            <h2 className="text-xl md:text-2xl font-bold text-slate-900">How Klartext Protects Your Sensitive Data</h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Designed for confidential administrative, legal, and health documents. Everything runs locally on your machine or secure server, with zero external cloud calls.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Étape 1 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 text-left relative">
+              <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm mb-3">1</div>
+              <h3 className="font-bold text-slate-900 text-sm mb-1">Local PDF Ingestion</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                You upload your administrative letters (KVG, Tax, Debt). Files and extracted texts stay strictly in local memory with zero disk persistence.
+              </p>
+            </div>
+
+            {/* Étape 2 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 text-left relative">
+              <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm mb-3">2</div>
+              <h3 className="font-bold text-slate-900 text-sm mb-1">Local AI Cascade (8B → 70B)</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Our optimized local LLM processes the document. The fast 8B model handles routine extraction, escalating complex clauses to the 70B model.
+              </p>
+            </div>
+
+            {/* Étape 3 */}
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 text-left relative">
+              <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-sm mb-3">3</div>
+              <h3 className="font-bold text-slate-900 text-sm mb-1">Secure Triage & Verifiable Spans</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Letters are automatically sorted by urgency with precise source-span highlights, enabling fast, verifiable human-in-the-loop review.
+              </p>
             </div>
           </div>
 
-          {/* Chart 2: Model Cascade Distribution */}
-          <div className="flex-1">
-            <h3 className="text-sm font-semibold text-slate-600 mb-3">Model Cascade Efficiency (8B → 70B)</h3>
-            <div className="flex items-center gap-4">
-              <div className="w-32 h-32 rounded-full border-[16px] border-indigo-600 relative flex items-center justify-center">
-                <span className="text-xl font-bold text-indigo-900">70%</span>
-                {/* SVG circle segment for the 30% escalation (3 of 10 letters) */}
-                <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="42" fill="none" stroke="#f97316" strokeWidth="16" strokeDasharray="264" strokeDashoffset="185" />
-                </svg>
-              </div>
-              <div className="flex flex-col gap-2 text-sm">
-                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-indigo-600 rounded"></div><span>Resolved by 8B Model (Fast)</span></div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 bg-orange-500 rounded"></div><span>Escalated to 70B Model (Deep)</span></div>
-              </div>
-            </div>
+          <div className="mt-6 pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-4">
+            <div>🛡️ <strong>Zero Data Leakage:</strong> No third-party APIs, no telemetry, fully compliant with strict data residency.</div>
+            <div className="font-mono bg-slate-100 px-2 py-1 rounded text-slate-700">Docker Container • Single-Stack Architecture</div>
           </div>
-
         </div>
       </section>
     </main>
