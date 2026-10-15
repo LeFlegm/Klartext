@@ -5,7 +5,7 @@ from functools import lru_cache
 from pathlib import Path
 
 import openai
-from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi import FastAPI, HTTPException, Response, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
@@ -36,6 +36,7 @@ LARGE_MODEL = os.environ.get("LLM_NAME_LARGE") or "apertus-v1.5-70b"
 class StoredDocument:
     filename: str
     text: str
+    pdf: bytes = b""  # kept in memory so the UI can show the original letter
 
 
 # In-memory stores: letters and results are never written to disk (privacy by design).
@@ -53,13 +54,14 @@ async def _store(file: UploadFile) -> tuple[str, str]:
     """Validate a PDF upload, extract its text and keep it in memory. Returns (id, text)."""
     if file.content_type != "application/pdf":
         raise HTTPException(status_code=415, detail="Only PDF files are supported.")
+    data = await file.read()
     try:
-        text = extract_text(await file.read())
+        text = extract_text(data)
     except EmptyDocumentError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
     doc_id = str(uuid.uuid4())
-    documents[doc_id] = StoredDocument(filename=file.filename or "letter.pdf", text=text)
+    documents[doc_id] = StoredDocument(filename=file.filename or "letter.pdf", text=text, pdf=data)
     return doc_id, text
 
 
@@ -85,6 +87,16 @@ async def upload_batch(files: list[UploadFile]):
         except HTTPException as e:
             failed.append({"filename": file.filename, "error": e.detail})
     return {"uploaded": uploaded, "failed": failed}
+
+@app.get("/documents/{doc_id}/file")
+def get_original_pdf(doc_id: str):
+    """The uploaded letter as a PDF, straight from memory, for the side-by-side view."""
+    doc = documents.get(doc_id)
+    if doc is None or not doc.pdf:
+        raise HTTPException(status_code=404, detail="Document not found.")
+    return Response(content=doc.pdf, media_type="application/pdf",
+                    headers={"Content-Disposition": "inline"})
+
 
 @app.post("/documents/{doc_id}/extract", response_model=LetterResult)
 def extract_document(doc_id: str, model: str | None = None):
