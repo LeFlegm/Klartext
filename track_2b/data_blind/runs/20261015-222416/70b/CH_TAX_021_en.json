@@ -1,0 +1,34 @@
+{
+  "letter": "CH_TAX_021_en",
+  "model": "apertus-v1.5-70b",
+  "latency_ms": 5809,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "City of Zurich — Expat Tax Services",
+      "source_span": "City of Zurich — Expat Tax Services",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay by 20 December 2026",
+      "source_span": "by 20.12.2026",
+      "verified": false,
+      "iso_date": "2026-12-20",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Settle the remaining balance of CHF 620.00",
+        "source_span": "settle the remaining balance of CHF 620.00",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "An automatic late payment fee of CHF 50.00 will be applied",
+        "source_span": "Failure to pay by the specified due date will result in an automatic late payment fee of CHF 50.00",
+        "verified": false
+      }
+    ]
+  }
+}

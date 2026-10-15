@@ -1,0 +1,25 @@
+{
+  "document_type": "health_insurance",
+  "sender": {
+    "value": "Assurance Santé Romande SA",
+    "source_span": "Assurance Santé Romande SA — Service Contentieux"
+  },
+  "deadline": {
+    "value": "15 jours",
+    "source_span": "dans un délai strict de 15 jours dès réception de la présente.",
+    "iso_date": null,
+    "relative_days": 15
+  },
+  "actions": [
+    {
+      "value": "Régler le montant de 540.00 CHF",
+      "source_span": "Nous vous prions de régler ce montant dans un délai strict de 15 jours"
+    }
+  ],
+  "consequences": [
+    {
+      "value": "Transmission du dossier au service juridique pour poursuite",
+      "source_span": "votre dossier sera immédiatement transmis au service juridique pour poursuite."
+    }
+  ]
+}

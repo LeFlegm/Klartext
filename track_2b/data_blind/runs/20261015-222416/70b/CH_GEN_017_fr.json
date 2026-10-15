@@ -1,0 +1,16 @@
+{
+  "letter": "CH_GEN_017_fr",
+  "model": "apertus-v1.5-70b",
+  "latency_ms": 2657,
+  "extraction": {
+    "document_type": "other",
+    "sender": {
+      "value": "Canton de Vaud — Service des Automobiles",
+      "source_span": "Canton de Vaud — Service des Automobiles",
+      "verified": false
+    },
+    "deadline": null,
+    "actions": [],
+    "consequences": []
+  }
+}

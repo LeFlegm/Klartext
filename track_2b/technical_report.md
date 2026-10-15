@@ -81,13 +81,24 @@ Reading the table: the larger model made more silent mistakes than the smaller o
 
 **What this does and does not show.** These ten letters were also our development set: several rules (hyphen joins, edge-only footer stripping, rejecting a deadline that claims both a date and a period) were added after seeing failures on them. We deliberately kept the checks conservative, because a false alarm costs a caseworker a quick look while a wrong but verified answer costs far more. The numbers are small and tuned, so they indicate a direction and not a measured error rate.
 
-**Blind test.** TODO: a separate set of new letters (two deadlines in one letter, no deadline, table or bank-slip layout, Italian, scan-like, an easy letter) written without looking at our rules, scored once. Report dev and blind results side by side here.
+**Blind test.** Six new letters (German, French, Italian and English, one with no deadline at all) were written by a teammate after the pipeline was frozen. We ran them once and changed no code, prompt or rule afterwards. The only edit was to the format of one ground-truth file (`document_type` and the empty deadline were rewritten to match the schema); its content is unchanged.
+
+| Setup | Undetected errors | Points judged | Note |
+|---|---|---|---|
+| A: 8B raw | 2 | 21 | no check |
+| B: 70B raw | 1 | 20 | no check |
+| C: 8B + checks | 1 | 19 | a wrong payment-period quote passed the check |
+| D: 70B + checks | 0 | 18 | |
+| E: cascade | 0 | 18 | 4.0 s per letter vs 5.6 s for 70B; 2 of 6 letters escalated |
+
+Document type, sender and deadline were correct for all six letters in every setup. Three things temper the result. First, the cascade avoided the error in C only because that letter happened to be escalated, so part of the zero is chance. Second, the system misses information: recall was 8 of 10 true points, and two payment actions in two letters were not extracted. Third, one correct point was flagged as unsupported (a false alarm) and one wrong point was flagged and not shown as verified, which is the intended behaviour. With six letters this shows that the check works, not what the error rate is. The saved raw answers and score table are in `data_blind/runs/`.
 
 ## 6. Limitations
 
 - **No OCR.** Scanned letters are rejected, not guessed.
 - **One deadline per letter.** Letters with several deadlines show one; a merged date-and-period deadline is flagged.
 - **Layout.** Multi-column layouts and sidebars can reorder words; such quotes fail verification and are flagged instead of trusted.
+- **"Verified" is not "right".** Verified means the quote exists in the letter and supports the stated date or fact; it does not prove the model chose the right passage. A real but irrelevant fragment can pass (seen once in the blind set, in the 8B-only setup; the cascade avoided it by escalating that letter). A second check that tests whether a quote actually states an obligation is the next step.
 - **Verification proves presence, not meaning.** A quote that exists in the letter can still be the wrong quote, or the English summary can misstate it. This is why the quote is always shown next to the summary for the caseworker to read.
 - **Explanations** are generated text. They use only verified facts, but the wording itself is not checked.
 - **State** is in memory in one process: a restart loses uploaded letters, and scaling out needs a shared store.

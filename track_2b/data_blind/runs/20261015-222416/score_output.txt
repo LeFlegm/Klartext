@@ -1,0 +1,18 @@
+run 20261015-222416  prompt 92f0d2688a81  temperature 0  models ['apertus-v1.5-8b', 'apertus-v1.5-70b']
+(blind set, 6 letters; output of: KLARTEXT_DATA=../data_blind python -m scripts.score_benchmark)
+
+                               A 8B raw    B 70B raw   C 8B+check  D 70B+check    E cascade
+letters scored                      6/6          6/6          6/6          6/6          6/6
+document type correct               6/6          6/6          6/6          6/6          6/6
+sender correct                      6/6          6/6          6/6          6/6          6/6
+deadline correct                    6/6          6/6          6/6          6/6          6/6
+content precision                  8/10          8/9         8/10          8/9          8/9
+content recall                     8/10         8/10         8/10         8/10         8/10
+wrong points                       2/21         1/20         2/21         1/20         1/20
+undetected errors                  2/21         1/20         1/19         0/18         0/18
+caught errors                       0/2          0/1          1/2          1/1          1/1
+false alarms                       0/19         0/19         1/19         1/19         1/19
+mean latency (ms)                  1826         5619         1826         5619         3978
+escalated to 70B                      -            -            -            -          2/6
+
+Note: ground truth CH_GEN_017_fr.json was corrected in format only (document_type administrative_notice -> other, empty deadline object -> null) before scoring, to match the schema; its content was not changed.

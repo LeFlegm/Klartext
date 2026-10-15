@@ -1,0 +1,34 @@
+{
+  "letter": "CH_BETREIBUNG_019_it",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 4145,
+  "extraction": {
+    "document_type": "debt_enforcement",
+    "sender": {
+      "value": "REPUBLICA E CANTONE TICINO — UFFICIO DELLE ESECUZIONI",
+      "source_span": "REPUBBLICA E CANTONE TICINO — UFFICIO DELLE ESECUZIONI",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay within 10 days of notification",
+      "source_span": "entro 10 giorni dalla notifica del presente atto",
+      "verified": false,
+      "iso_date": null,
+      "relative_days": 10
+    },
+    "actions": [
+      {
+        "value": "Pay CHF 1,200.00 plus 5% interest",
+        "source_span": "pagare la somma di CHF 1'200.00 oltre agli interessi moratori del 5%",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Immediate seizure of assets will occur",
+        "source_span": "si procederà immediatamente con il pignoramento dei suoi beni",
+        "verified": false
+      }
+    ]
+  }
+}

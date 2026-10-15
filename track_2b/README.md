@@ -111,9 +111,27 @@ C 8B + check, D 70B + check, E cascade. Raw model answers and scores are saved i
 flagged answers a human looks at; the cascade then fixes most flagged answers at lower cost than always using 70B.
 
 **Caveat:** these ten letters were also our development set, and some checks were added after
-we saw failures on them. The numbers show a direction, not a guarantee. A blind set is scored once at the end.
+we saw failures on them. The numbers show a direction, not a guarantee. The blind set below was scored once.
 
-<!-- TODO: add blind-set results here and in the report -->
+### Blind set (scored once)
+
+Six new letters (DE/FR/IT/EN, one with no deadline) written by a teammate, in
+[`data_blind/`](data_blind/) with ground truth. We ran them once and changed no code or prompt afterwards.
+Raw answers and the score table are saved in `data_blind/runs/`
+(`KLARTEXT_DATA=../data_blind python -m scripts.run_benchmark`, then `scripts.score_benchmark`).
+
+| Setup | Undetected errors | Note |
+|---|---|---|
+| A: 8B raw | 2 / 21 | |
+| B: 70B raw | 1 / 20 | |
+| C: 8B + check | 1 / 19 | one wrong payment-period quote passed the check |
+| D: 70B + check | 0 / 18 | |
+| E: cascade | 0 / 18 | 4.0 s per letter vs 5.6 s for 70B; 2 of 6 letters escalated |
+
+The cascade avoided the error in C only because that letter was escalated to 70B, so part of the
+zero is luck of the draw. The system also misses information: recall was 8 of 10 true points
+(two payment-deadline actions were not extracted), and one correct point was flagged as unsupported.
+Six letters is a small sample: this shows the check works in practice, not a measured error rate.
 
 ```bash
 cd src
@@ -128,8 +146,9 @@ python scripts/score_benchmark.py      # scores the latest saved run, offline
 - No OCR: scanned letters are rejected with a clear error.
 - One deadline per letter.
 - Multi-column layouts can reorder words; such quotes are flagged as unverified instead of trusted.
+- "Verified" means the quote exists in the letter, not that the model picked the right passage. A real but irrelevant fragment can pass (seen once in the blind set, 8B only).
 - State is in memory in a single process: restart means upload again.
-- Tested on synthetic letters only, in German, French and Italian.
+- Tested on synthetic letters only (16 in total, mostly German, French and Italian, one English).
 
 ## Repository layout
 
@@ -139,6 +158,7 @@ data/
   *.pdf            synthetic letters (DE/FR/IT)
   ground_truth/    hand-written expected answers per letter
   runs/            raw model answers and scores of each benchmark run
+data_blind/        blind set: 6 letters, ground_truth/ and runs/ (scored once)
 docs/
   api_example.json example API response
   mock/            mock responses used for UI development

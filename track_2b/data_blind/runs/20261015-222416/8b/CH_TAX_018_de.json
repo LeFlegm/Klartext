@@ -1,0 +1,28 @@
+{
+  "letter": "CH_TAX_018_de",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1287,
+  "extraction": {
+    "document_type": "tax",
+    "sender": {
+      "value": "Kantonales Steueramt St. Gallen",
+      "source_span": "Kantonales Steueramt St. Gallen",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay by 31 December 2026",
+      "source_span": "zahlbar bis 31.12.2026",
+      "verified": false,
+      "iso_date": "2026-12-31",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Transfer CHF 1'850.00 to account CH93 0000 0000 0000 0000 0",
+        "source_span": "überweisen Sie den Totalbetrag von CHF 1'850.00",
+        "verified": false
+      }
+    ],
+    "consequences": []
+  }
+}

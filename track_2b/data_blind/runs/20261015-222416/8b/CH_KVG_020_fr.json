@@ -1,0 +1,39 @@
+{
+  "letter": "CH_KVG_020_fr",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1469,
+  "extraction": {
+    "document_type": "health_insurance",
+    "sender": {
+      "value": "Assurance Santé Romande SA — Service Contentieux",
+      "source_span": "Assurance Santé Romande SA — Service Contentieux",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay within 15 days of receiving this letter",
+      "source_span": "dans un délai strict de 15 jours dès réception de la présente",
+      "verified": false,
+      "iso_date": null,
+      "relative_days": 15
+    },
+    "actions": [
+      {
+        "value": "Pay the outstanding amount of 540.00 CHF",
+        "source_span": "régler ce montant de 540.00 CHF",
+        "verified": false
+      },
+      {
+        "value": "Pay the monthly premium",
+        "source_span": "correspondant à votre prime mensuelle",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "The case will be immediately transferred to the legal department for enforcement",
+        "source_span": "votre dossier sera immédiatement transmis au service juridique pour poursuite",
+        "verified": false
+      }
+    ]
+  }
+}

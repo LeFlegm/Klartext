@@ -1,0 +1,34 @@
+{
+  "letter": "CH_KVG_016_de",
+  "model": "apertus-v1.5-8b",
+  "latency_ms": 1422,
+  "extraction": {
+    "document_type": "health_insurance",
+    "sender": {
+      "value": "Helvetia Krankenversicherung AG",
+      "source_span": "Helvetia Krankenversicherung AG",
+      "verified": false
+    },
+    "deadline": {
+      "value": "Pay by 15 November 2026",
+      "source_span": "bis zum 15.11.2026",
+      "verified": false,
+      "iso_date": "2026-11-15",
+      "relative_days": null
+    },
+    "actions": [
+      {
+        "value": "Pay the outstanding premium of CHF 420.00",
+        "source_span": "die ausstehende Prämienabrechnung für das vierte Quartal in der Höhe von CHF 420.00 begleichen",
+        "verified": false
+      }
+    ],
+    "consequences": [
+      {
+        "value": "Late payment fees of CHF 30.00 will be charged",
+        "source_span": "Mahngebühren von CHF 30.00 verrechnet",
+        "verified": false
+      }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 """Run both Apertus models on every letter that has ground truth and save the raw answers."""
 import hashlib
 import json
+import os
 from datetime import datetime
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from klartext.adapters.pdf import extract_text
 from klartext.services.extractor import SYSTEM_PROMPT, extract
 
 MODELS = {"8b": "apertus-v1.5-8b", "70b": "apertus-v1.5-70b"}
-DATA = Path("../data")
+DATA = Path(os.environ.get("KLARTEXT_DATA", "../data"))  # set KLARTEXT_DATA to score another folder, e.g. the blind set
 
 def letters_with_ground_truth() -> list[str]:
     stems = sorted(p.stem for p in (DATA / "ground_truth").glob("*.json"))

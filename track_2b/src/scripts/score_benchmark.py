@@ -1,5 +1,6 @@
 """Score a saved benchmark run: five configurations side by side, plus the points worth reading."""
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -8,7 +9,7 @@ from klartext.domain.models import Extraction
 from klartext.domain.validation import verify
 from klartext.eval.metrics import Run, evaluate_config, judged_points, outcome_for, points_of, same_passage
 
-DATA = Path("../data")
+DATA = Path(os.environ.get("KLARTEXT_DATA", "../data"))  # set KLARTEXT_DATA to score another folder, e.g. the blind set
 CONFIGS = {"A": "A 8B raw", "B": "B 70B raw", "C": "C 8B+check", "D": "D 70B+check", "E": "E cascade"}
 
 
