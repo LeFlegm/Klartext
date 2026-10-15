@@ -25,8 +25,6 @@ def facts_from(result: LetterResult) -> str:
         lines.append(f"Sender: {e.sender.value}")
     if e.deadline is not None and e.deadline.verified:
         when = e.deadline.value
-    if e.deadline is not None and e.deadline.verified:
-        when = e.deadline.value
         if result.days_left is not None:
             approx = "about " if result.days_left_estimated else ""
             when += f" ({approx}{result.days_left} days left)"
