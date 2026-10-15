@@ -79,7 +79,7 @@ export default function KlartextApp() {
     <div className="bg-slate-50 min-h-screen font-sans text-slate-800">
       <header className="bg-slate-900 text-white p-4 flex justify-between items-center shadow-md">
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold tracking-tight">Klartext <span className="font-light text-slate-400">| Triage Desk</span></h1>
+          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><svg className="w-8 h-8" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#4f46e5"/><path d="M20 16v32M42 16L26 32l14 15" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"/><circle cx="48" cy="48" r="10" fill="#10b981"/><path d="M43.5 48l3.2 3.2 5.3-6" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/></svg><span>Klartext <span className="font-light text-slate-400">| Triage Desk</span></span></h1>
           <span className="bg-emerald-900 text-emerald-400 px-3 py-1 rounded-full text-xs border border-emerald-700">
             🔒 In-memory only
           </span>
