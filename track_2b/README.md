@@ -170,7 +170,7 @@ src/
 
 ## Licence
 
-Apache License 2.0, see the repository's `LICENSE`.
+Following the hackathon terms: code under Apache License 2.0 (see `LICENSE`), documentation under CC-BY-4.0, and the evaluation data in `data/` and `data_blind/` under CDLA-Permissive-2.0.
 
 ---
 

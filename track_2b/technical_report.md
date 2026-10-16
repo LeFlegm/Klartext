@@ -123,7 +123,7 @@ Document type, sender and deadline were correct for all six letters in every set
 
 ## License
 
-Code: Apache License 2.0 (see `LICENSE` in the repository). Report and synthetic dataset: Creative Commons Attribution 4.0 (CC-BY-4.0).
+Following the hackathon terms (section 6): code under Apache License 2.0 (see `LICENSE` in the repository), this report and other documentation under Creative Commons Attribution 4.0 (CC-BY-4.0), and the evaluation data (letters, ground truth, raw model answers) under the Community Data License Agreement, Permissive 2.0 (CDLA-Permissive-2.0).
 
 ## References
 
