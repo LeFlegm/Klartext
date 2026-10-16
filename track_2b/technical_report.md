@@ -4,8 +4,8 @@ Batch triage of official Swiss letters for caseworkers, with every extracted fac
 
 - **Track:** Track 2B: Own Project
 - **Event:** Online
-- **Team:** TODO team name: Yusuf Öztoprak, Alexis Merle
-- **Demo:** TODO link to video
+- **Team:** Baguette & Baklava: Yusuf Öztoprak, Alexis Merle
+- **Demo:** https://youtu.be/zZ5clDtspV0
 - **Code:** https://github.com/LeFlegm/Klartext (`track_2b/`)
 
 ## 1. Summary
@@ -58,10 +58,10 @@ Klartext is deployable **on-premise and air-gapped** (a and b), and equally on a
 
 ## 4. Data
 
-- **Letters:** ten synthetic letters in German, French and Italian (tax, health insurance, debt enforcement), including traps such as a letterhead repeated in the signature, two dates in one letter, a period instead of a date, a sidebar that reorders text, and letters with no deadline. TODO (Alexis): describe how the letters were created and whether AI tools were used.
+- **Letters:** ten synthetic letters in German, French and Italian (tax, health insurance, debt enforcement), including traps such as a letterhead repeated in the signature, two dates in one letter, a period instead of a date, a sidebar that reorders text, and letters with no deadline. The layouts were designed by hand to match official Swiss formats (KVG health insurance, cantonal tax, debt enforcement). The text and the legal phrasing were drafted with LLM assistance (Gemini and Claude) and then curated by hand to add realistic visual edge cases such as manual hyphenation, sidebars, multi-page headers and QR codes.
 - **Ground truth:** written by hand for each letter (sender, deadline, actions, consequences, each with a quote). A script checks that every ground-truth quote really occurs in the letter.
 - **Licence and privacy:** all content is synthetic and invented by the team; no real person, address or case is included. Letters, ground truth and saved model answers are in `data/` (under 1 MB).
-- **Planned dataset release:** the evaluation letters, ground truth and raw model responses (Hugging Face, template of the organisers). TODO link.
+- **Availability:** the evaluation letters, ground truth and raw model responses are in the repository (`data/` and `data_blind/`). We did not publish a separate Hugging Face dataset.
 
 ## 5. Evaluation
 
@@ -110,7 +110,7 @@ Document type, sender and deadline were correct for all six letters in every set
 - **Tests:** `cd src && python -m pytest` (unit tests for verification, dates, relative deadlines, PDF layout, metrics, cascade, configuration and API wiring).
 - **Numbers:** `python scripts/score_benchmark.py` re-scores a saved run in `data/runs/` offline. `python scripts/run_benchmark.py` repeats the model calls (needs the endpoint).
 - **Runtime:** Python 3.12 and Node 22 inside Docker; no GPU on our side, models are served remotely. Temperature 0; the hosted endpoint is not guaranteed to be bit-for-bit deterministic.
-- **Commit:** TODO final commit hash.
+- **Commit:** the pipeline was evaluated and the app tested at commit `a9ab777`; later commits change only the report and README.
 
 ## 8. Next steps
 
@@ -123,7 +123,7 @@ Document type, sender and deadline were correct for all six letters in every set
 
 ## License
 
-Code: Apache License 2.0 (see `LICENSE` in the repository). Report and synthetic dataset: Creative Commons Attribution 4.0 (CC-BY-4.0). TODO: confirm with the organisers that this split satisfies the terms; the report template names CC-BY-4.0.
+Code: Apache License 2.0 (see `LICENSE` in the repository). Report and synthetic dataset: Creative Commons Attribution 4.0 (CC-BY-4.0).
 
 ## References
 
